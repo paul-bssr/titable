@@ -12,5 +12,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
 Imports: 
     finalfit,
+    lars,
     testthat
 Config/testthat/edition: 3

@@ -1,5 +1,21 @@
+#' @title Compute numeric values for OR, IC, pvalue for a glm model
+#'
+#' @description A function to compute numeric values for OR, IC, pvalue from a
+#' fitted glm model corresponding to a Logistic Regression (family="binomial")
+#'
+#' @param model A glm model corresponding to a logistic regression
+#' (family=binomial)
+#' @param studied_var Name of the variable to explain
+#'
+#' @return A vector containing 4 numeric values : OR, IC_min, IC_max, p
+#' @export
+#'
+#' @examples
+#' model_1 <- glm( death_J28 ~ ., data=data, family="binomial")
+#' extract_OR_to_str(model_1, col)
+#'
 extract_OR_from_model <- function(model, studied_var){
-  # Function to summarize OR, IC, pvalue from model
+  # Function to
   # Returns : OR, IC_min, IC_max, p
 
   # OR, p extraction from coef
