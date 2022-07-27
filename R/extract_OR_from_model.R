@@ -10,6 +10,7 @@
 #' @return A vector containing 4 numeric values : OR, IC_min, IC_max, p
 #' @export
 #'
+#'
 #' @examples
 #' model_1 <- glm( death_J28 ~ ., data=data, family="binomial")
 #' extract_OR_to_str(model_1, col)
