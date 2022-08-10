@@ -19,9 +19,15 @@
     <loc>/reference/extract_OR_from_model.html</loc>
   </url>
   <url>
+    <loc>/reference/extract_OR_to_str.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
     <loc>/reference/str_transform_OR_with_IC.html</loc>
+  </url>
+  <url>
+    <loc>/reference/wdbc.data.html</loc>
   </url>
 </urlset>
