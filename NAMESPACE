@@ -3,3 +3,4 @@
 export(extract_OR_from_model)
 export(extract_OR_to_str)
 export(str_transform_OR_with_IC)
+import(stats)

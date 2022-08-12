@@ -8,6 +8,9 @@
 #' @param studied_var Name of the variable to explain
 #'
 #' @return A vector containing 4 numeric values : OR, IC_min, IC_max, p
+#'
+#' @import stats
+#'
 #' @export
 #'
 #'

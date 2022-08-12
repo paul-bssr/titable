@@ -14,7 +14,8 @@
 #' @param digits_p An integer input giving the number of digits for rounding
 #' p_value
 #'
-#' @return a string "OR (IC_min-IC_max, p=pvalue)
+#' @return a string "OR (IC_min-IC_max, p=pvalue)"
+#'
 #' @export
 #'
 #' @examples
