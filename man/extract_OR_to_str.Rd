@@ -23,6 +23,8 @@ result in a string of the form "OR (IC_min-IC_max, p=pvalue)"
 Title
 }
 \examples{
-model_1 <- glm( death_J28 ~ ., data=data, family="binomial")
-extract_OR_to_str(model_1, col)
+model_1 <- glm( diagnosis ~ texture + radius + perimeter,
+                data=wdbc.data,
+                family="binomial")
+extract_OR_to_str(model_1, studied_var = "texture")
 }
