@@ -15,8 +15,10 @@
 #'
 #'
 #' @examples
-#' model_1 <- glm( death_J28 ~ ., data=data, family="binomial")
-#' extract_OR_to_str(model_1, col)
+#' model_1 <- glm( diagnosis ~ texture + radius + perimeter,
+#'                 data=wdbc.data,
+#'                 family="binomial")
+#' extract_OR_from_model(model_1, studied_var = "texture")
 #'
 extract_OR_from_model <- function(model, studied_var){
   # Function to
