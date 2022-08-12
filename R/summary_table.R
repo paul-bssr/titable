@@ -49,7 +49,10 @@ summary_table <- function(data,
                                family="binomial")
 
       # Assigning the result in output table
-      table[table$label==col, "OR (univariate)"] <- extract_OR_to_str(model_univariate, studied_var = col)
+      table[
+        table$label==col,
+        "OR (univariate)"
+        ] <- extract_OR_to_str(model_univariate, studied_var = col)
     }
 
     ## Adding multivariable models
