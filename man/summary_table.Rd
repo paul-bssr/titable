@@ -21,6 +21,12 @@ Title
 \examples{
 summary_table(data = wdbc.data,
               studied_vars = c("radius", "texture"),
+              dependent = "diagnosis",
+              univariate = FALSE
+             )
+
+summary_table(data = wdbc.data,
+              studied_vars = c("radius", "texture"),
               dependent = "diagnosis" )
 
 summary_table(data = wdbc.data,

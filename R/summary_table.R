@@ -6,11 +6,16 @@
 #'
 #' @return
 #'
-#' @import dplyr
 #' @import finalfit
 #' @export
 #'
 #' @examples
+#' summary_table(data = wdbc.data,
+#'               studied_vars = c("radius", "texture"),
+#'               dependent = "diagnosis",
+#'               univariate = FALSE
+#'              )
+#'
 #' summary_table(data = wdbc.data,
 #'               studied_vars = c("radius", "texture"),
 #'               dependent = "diagnosis" )
@@ -60,7 +65,10 @@ summary_table <- function(data,
                                    family="binomial")
 
         # Assigning the result in output table
-        table[table$label==col, paste("OR (model ", counter, ")", sep = "" )] <- extract_OR_to_str(model_univariate, studied_var = col)
+        table[
+          table$label==col,
+          paste("OR (model ", counter, ")", sep = "" )
+          ] <- extract_OR_to_str(model_univariate, studied_var = col)
 
         counter = counter + 1
 
