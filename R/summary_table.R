@@ -1,10 +1,28 @@
-#' Title
+#' @title Build summary table for OR univariate/mulitvariate
 #'
-#' @param dependent
-#' @param univariate
-#' @param multivariate
+#' @description Function building a summary table for Odds Ratios (OR) computed
+#' for a given `dependent` variable with one line for each explanatory variables
+#' given in `studied_vars`. If `univariate` is  `TRUE` OR computed using
+#' univariate logistic regressions are added to a column "Univariable model".
+#' Finally, for each set of adjustment variables in `multivariate` a column
+#' giving the OR after adjustment is added.
 #'
-#' @return
+#' @param dependent Character input containing the name of the binary variable
+#' to explain
+#' @param studied_vars Vector of characters with names of the different
+#' explanatory variables to study
+#' @param univariate Boolean. If TRUE, addition of univariate model to final
+#' table
+#' @param multivariate List of character vectors containing different sets to be
+#' used for adjustement.
+#'
+#' @return A data.frame containing :
+#' \itemize{
+#' \item{ One row for each explanatory variables in `studied_vars`}
+#' \item{ Columns describing their distribution in the different categories of
+#' `dependent` variable }
+#' \item{ Columns for each univariate or multivariate model }
+#' }
 #'
 #' @import finalfit
 #' @export

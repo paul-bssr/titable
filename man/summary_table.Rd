@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary_table.R
 \name{summary_table}
 \alias{summary_table}
-\title{Title}
+\title{Build summary table for OR univariate/mulitvariate}
 \usage{
 summary_table(
   data,
@@ -13,10 +13,34 @@ summary_table(
 )
 }
 \arguments{
-\item{multivariate}{}
+\item{studied_vars}{Vector of characters with names of the different
+explanatory variables to study}
+
+\item{dependent}{Character input containing the name of the binary variable
+to explain}
+
+\item{univariate}{Boolean. If TRUE, addition of univariate model to final
+table}
+
+\item{multivariate}{List of character vectors containing different sets to be
+used for adjustement.}
+}
+\value{
+A data.frame containing :
+\itemize{
+\item{ One row for each explanatory variables in \code{studied_vars}}
+\item{ Columns describing their distribution in the different categories of
+\code{dependent} variable }
+\item{ Columns for each univariate or multivariate model }
+}
 }
 \description{
-Title
+Function building a summary table for Odds Ratios (OR) computed
+for a given \code{dependent} variable with one line for each explanatory variables
+given in \code{studied_vars}. If \code{univariate} is  \code{TRUE} OR computed using
+univariate logistic regressions are added to a column "Univariable model".
+Finally, for each set of adjustment variables in \code{multivariate} a column
+giving the OR after adjustment is added.
 }
 \examples{
 summary_table(data = wdbc.data,
