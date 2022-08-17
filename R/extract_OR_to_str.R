@@ -19,7 +19,17 @@
 #' extract_OR_to_str(model_1, studied_var = "texture")
 
 extract_OR_to_str <- function(model, studied_var){
+
+  # Checking type of inputs
+  stopifnot("Model must be binomial family glm" =
+              (model$family$family == "binomial") )
+  stopifnot("Input studied_var must be a character" =
+              ( class(studied_var) == "character" ) )
+
+  # Computing coefficients
   coef <- extract_OR_from_model(model, studied_var)
+
+  # Converting to a string
   str_final <- str_transform_OR_with_IC(
     OR = coef[1],
     IC_min = coef[2],
