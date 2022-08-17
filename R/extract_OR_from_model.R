@@ -21,8 +21,12 @@
 #' extract_OR_from_model(model_1, studied_var = "texture")
 #'
 extract_OR_from_model <- function(model, studied_var){
-  # Function to
-  # Returns : OR, IC_min, IC_max, p
+
+  # Checking type of inputs
+  stopifnot("Model must be binomial family glm" =
+            (model$family$family == "binomial") )
+  stopifnot("Input studied_var must be a character" =
+            ( class(studied_var) == "character" ) )
 
   # OR, p extraction from coef
   coef = coef(summary(model))
