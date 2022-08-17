@@ -33,6 +33,6 @@ summary_table(data = wdbc.data,
               studied_vars = c("radius", "texture"),
               dependent = "diagnosis",
               multivariate = list(c("smoothness", "texture"),
-                                  c("concavity", "symetry"))
+                                  c("concavity", "symmetry"))
              )
 }

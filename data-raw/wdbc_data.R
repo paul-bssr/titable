@@ -23,7 +23,7 @@ wdbc.data <- wdbc.data[,1:12]
 # column renaming
 colnames(wdbc.data) <- c("person_id", "diagnosis", "radius", "texture",
                          "perimeter", "area", "smoothness", "compactness",
-                         "concavity", "concave_points", "symetry",
+                         "concavity", "concave_points", "symmetry",
                          "fractal_dimension"
                          )
 

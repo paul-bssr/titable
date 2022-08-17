@@ -17,7 +17,7 @@ A data frame with 569 rows and 12 variables:
 \item{compactness}{perimeter^2 / area - 1.0}
 \item{concavity}{Severity of concave portions of the contour}
 \item{concave_points}{Number of concave portions of the contour}
-\item{symetry}{see doc}
+\item{symmetry}{see doc}
 \item{fractal_dimension}{"coastline approximation" - 1}
 }
 }
