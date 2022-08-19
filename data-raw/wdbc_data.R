@@ -27,5 +27,16 @@ colnames(wdbc.data) <- c("person_id", "diagnosis", "radius", "texture",
                          "fractal_dimension"
                          )
 
+# Adding binary col for compactness (threshold = 0.1)
+wdbc.data[,"compactness_binary"] <- as.factor(
+  as.numeric(wdbc.data$compactness > 0.1)
+  )
+
+# Adding a col with 4 categories for compactness (quartiles)
+wdbc.data[,"compactness_quartile"] <- cut(
+  wdbc.data$compactness,
+  breaks = c(quantile(wdbc.data$compactness)),
+  labels = c(1, 2, 3, 4)
+  )
 
 usethis::use_data(wdbc.data, overwrite = TRUE)
