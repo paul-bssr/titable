@@ -5,10 +5,20 @@ test_that(
                     data=wdbc.data,
                     family="binomial")
 
+    model_2 <- glm( diagnosis ~ compactness_binary + radius + perimeter,
+                    data=wdbc.data,
+                    family="binomial")
+
     expect_equal(
       signif( extract_OR_from_model(model_1, studied_var = "texture"), 5),
       c(1.2748, 1.1691, 1.3983, 9.2052e-08)
       )
+
+    expect_equal(
+      signif(
+        extract_OR_from_model(model_2, studied_var = "compactness_binary"), 5),
+      c(1.54370, 0.58894, 4.04250, 0.37539)
+    )
     }
   )
 
