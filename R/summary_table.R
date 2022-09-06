@@ -89,7 +89,7 @@ summary_table <- function(data,
         table[
           table$label==col,
           paste("OR (model ", counter, ")", sep = "" )
-          ] <- extract_OR_to_str(model_univariate, studied_var = col)
+          ] <- extract_OR_to_str(model_multivariate, studied_var = col)
 
         counter = counter + 1
 
