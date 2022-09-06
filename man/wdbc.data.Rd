@@ -19,6 +19,11 @@ A data frame with 569 rows and 12 variables:
 \item{concave_points}{Number of concave portions of the contour}
 \item{symmetry}{see doc}
 \item{fractal_dimension}{"coastline approximation" - 1}
+\item{compactness_binary}{Factor containing binarized compactness
+(threshold=0.1). Additional toy parameter.}
+}
+\item{compactness_quartile}{Factor containing compactness divided in
+quartiles. Additional toy parameter.}
 }
 }
 \source{
