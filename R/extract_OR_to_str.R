@@ -9,14 +9,21 @@
 #' (family=binomial)
 #' @param studied_var Name of the variable to explain
 #'
-#' @return A string of the form "OR (IC_min-IC_max, p=pvalue)
+#' @return A data.frame with one column containing strings of the form
+#' "OR (IC_min-IC_max, p=pvalue)". It has one row for quantitative, and (n-1)
+#' row for categorical data (with n the number of categories)
 #' @export
 #'
 #' @examples
-#' model_1 <- glm( diagnosis ~ texture + radius + perimeter,
+#' model_1 <- glm( diagnosis ~ texture + radius + compactness_quartile,
 #'                 data=wdbc.data,
 #'                 family="binomial")
+#'
+#' ### With quantitative data
 #' extract_OR_to_str(model_1, studied_var = "texture")
+#'
+#' ### With categorical column
+#' extract_OR_to_str(model_1, studied_var = "compactness_quartile")
 
 extract_OR_to_str <- function(model, studied_var){
 
@@ -30,11 +37,7 @@ extract_OR_to_str <- function(model, studied_var){
   coef <- extract_OR_from_model(model, studied_var)
 
   # Converting to a string
-  str_final <- str_transform_OR_with_IC(
-    OR = coef[1],
-    IC_min = coef[2],
-    IC_max = coef[3],
-    pvalue = coef[4]
-  )
+  str_final <- str_transform_OR_with_IC(coef)
+
   return(str_final)
 }

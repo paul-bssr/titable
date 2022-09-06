@@ -1,13 +1,16 @@
 #' @title Compute numeric values for OR, IC, pvalue for a glm model
 #'
 #' @description A function to compute numeric values for OR, IC, pvalue from a
-#' fitted glm model corresponding to a Logistic Regression (family="binomial")
+#' fitted glm model corresponding to a Logistic Regression (family="binomial").
+#' It takes into account quantitative and categorical data.
 #'
 #' @param model A glm model corresponding to a logistic regression
 #' (family=binomial)
 #' @param studied_var Name of the variable to explain
 #'
-#' @return A vector containing 4 numeric values : OR, IC_min, IC_max, p
+#' @return A data.frame containing 4 numeric columns : OR, IC_min, IC_max, p. It
+#' has one row for quantitative, and (n-1) row for categorical data (with n the
+#' number of categories)
 #'
 #' @import stats
 #'
@@ -15,10 +18,18 @@
 #'
 #'
 #' @examples
+#' ### Only quantitative data
 #' model_1 <- glm( diagnosis ~ texture + radius + perimeter,
 #'                 data=wdbc.data,
 #'                 family="binomial")
 #' extract_OR_from_model(model_1, studied_var = "texture")
+#'
+#'
+#' ### With factors
+#' model_2 <- glm( diagnosis ~ compactness_quartile + radius + perimeter,
+#'                 data=wdbc.data,
+#'                 family="binomial")
+#' extract_OR_from_model(model_2, studied_var = "compactness_quartile")
 #'
 extract_OR_from_model <- function(model, studied_var){
 
@@ -39,5 +50,5 @@ extract_OR_from_model <- function(model, studied_var){
   cond_conf_int = grepl( studied_var , rownames(conf_int))
   IC_min = exp( conf_int[cond_conf_int, "2.5 %"] )
   IC_max = exp( conf_int[cond_conf_int, "97.5 %"] )
-  return( c(OR, IC_min, IC_max, p) )
+  return( data.frame(OR, IC_min, IC_max, p) )
 }

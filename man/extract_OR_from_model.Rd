@@ -13,16 +13,27 @@ extract_OR_from_model(model, studied_var)
 \item{studied_var}{Name of the variable to explain}
 }
 \value{
-A vector containing 4 numeric values : OR, IC_min, IC_max, p
+A data.frame containing 4 numeric columns : OR, IC_min, IC_max, p. It
+has one row for quantitative, and (n-1) row for categorical data (with n the
+number of categories)
 }
 \description{
 A function to compute numeric values for OR, IC, pvalue from a
-fitted glm model corresponding to a Logistic Regression (family="binomial")
+fitted glm model corresponding to a Logistic Regression (family="binomial").
+It takes into account quantitative and categorical data.
 }
 \examples{
+### Only quantitative data
 model_1 <- glm( diagnosis ~ texture + radius + perimeter,
                 data=wdbc.data,
                 family="binomial")
 extract_OR_from_model(model_1, studied_var = "texture")
+
+
+### With factors
+model_2 <- glm( diagnosis ~ compactness_quartile + radius + perimeter,
+                data=wdbc.data,
+                family="binomial")
+extract_OR_from_model(model_2, studied_var = "compactness_quartile")
 
 }

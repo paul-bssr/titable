@@ -65,12 +65,25 @@ summary_table <- function(data,
       model_univariate <- glm( formula = frm,
                                data=wdbc.data,
                                family="binomial")
+      coef_summary <- extract_OR_to_str(model_univariate, studied_var = col)
+
 
       # Assigning the result in output table
-      table[
-        table$label==col,
-        "OR (univariate)"
-        ] <- extract_OR_to_str(model_univariate, studied_var = col)
+      if (is.factor(data[,col])) {
+        index_col <- which(table$label==col)
+        nlevels <- nlevels(data[,col])
+        index_col_end <- index_col+nlevels-1
+        table[
+          index_col+1:index_col_end,
+          "OR (univariate)"
+          ] <- coef_summary[,1]
+
+      } else {
+        table[
+          table$label==col,
+          "OR (univariate)"
+          ] <- coef_summary[1,1]
+      }
     }
 
     ## Adding multivariable models
