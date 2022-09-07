@@ -4,7 +4,7 @@
 \alias{extract_OR_to_str}
 \title{Compute and summarize in a string OR, IC, pvalue for a glm model}
 \usage{
-extract_OR_to_str(model, studied_var)
+extract_OR_to_str(model, studied_var, level = NULL)
 }
 \arguments{
 \item{model}{A glm model corresponding to a logistic regression

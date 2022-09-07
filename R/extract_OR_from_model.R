@@ -6,6 +6,8 @@
 #' @param model A glm model corresponding to a logistic regression
 #' (family=binomial)
 #' @param studied_var Name of the variable to explain
+#' @param level A string indicating the level to consider for categorical
+#' variables (default:NULL)
 #'
 #' @return A vector containing 4 numeric values : OR, IC_min, IC_max, p
 #'
@@ -15,10 +17,15 @@
 #'
 #'
 #' @examples
-#' model_1 <- glm( diagnosis ~ texture + radius + perimeter,
+#' model_1 <- glm( diagnosis ~ texture + radius + compactness_quartile,
 #'                 data=wdbc.data,
 #'                 family="binomial")
+#'
+#' # For quantitative variable
 #' extract_OR_from_model(model_1, studied_var = "texture")
+#'
+#' # For categorical variable
+#' extract_OR_from_model(model_1, studied_var = "texture", level="2")
 #'
 extract_OR_from_model <- function(model, studied_var, level=NULL){
 
