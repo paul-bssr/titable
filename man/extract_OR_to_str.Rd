@@ -11,6 +11,9 @@ extract_OR_to_str(model, studied_var, level = NULL)
 (family=binomial)}
 
 \item{studied_var}{Name of the variable to explain}
+
+\item{level}{A string indicating the level to consider for categorical
+variables (default:NULL)}
 }
 \value{
 A string of the form "OR (IC_min-IC_max, p=pvalue)
@@ -23,8 +26,13 @@ result in a string of the form "OR (IC_min-IC_max, p=pvalue)"
 Title
 }
 \examples{
-model_1 <- glm( diagnosis ~ texture + radius + perimeter,
+model_1 <- glm( diagnosis ~ texture + radius + compactness_quartile,
                 data=wdbc.data,
                 family="binomial")
+
+# For quantitative variable
 extract_OR_to_str(model_1, studied_var = "texture")
+
+# For categorical variable
+extract_OR_to_str(model_1, studied_var = "texture", level="2")
 }
