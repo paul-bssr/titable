@@ -8,6 +8,7 @@
 #' giving the OR after adjustment is added. Remark : if `dependent` variable is
 #' also in the adjustement set, it is automatically removed.
 #'
+#' @param data A data.frame containing the data to be analyzed
 #' @param dependent Character input containing the name of the binary variable
 #' to explain
 #' @param studied_vars Vector of characters with names of the different
@@ -64,14 +65,14 @@ summary_table <- function(data,
       print ('Computing univariate')
       frm <- as.formula(paste(dependent, "~", col))
       model_univariate <- glm( formula = frm,
-                               data=wdbc.data,
+                               data=data,
                                family="binomial")
 
       # Assigning the result in output table
       if (is.factor(data[,col])) {
         index_row <- which( table$label ==col)
 
-        for (level in levels(wdbc.data[[col]])[-c(1)]){
+        for (level in levels(data[[col]])[-c(1)]){
           index_row = index_row + 1
           table[index_row, "OR (univariate)"] <- extract_OR_to_str(
             model_univariate, studied_var = col, level=level)
@@ -96,7 +97,7 @@ summary_table <- function(data,
         # Computing multivariate model
         frm <- as.formula(paste(dependent, "~", col, "+", str_adj))
         model_multivariate <- glm( formula = frm,
-                                   data=wdbc.data,
+                                   data=data,
                                    family="binomial")
 
 
@@ -106,7 +107,7 @@ summary_table <- function(data,
         if (is.factor(data[,col])) {
           index_row <- which( table$label ==col)
 
-          for (level in levels(wdbc.data[[col]])[-c(1)]){
+          for (level in levels(data[[col]])[-c(1)]){
             index_row = index_row + 1
             table[index_row, OR_multi_colname] <- extract_OR_to_str(
               model_multivariate, studied_var = col, level=level)

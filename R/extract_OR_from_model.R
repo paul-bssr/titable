@@ -25,8 +25,11 @@
 #' extract_OR_from_model(model_1, studied_var = "texture")
 #'
 #' # For categorical variable
-#' extract_OR_from_model(model_1, studied_var = "texture", level="2")
+#' extract_OR_from_model(model_1, studied_var = "compactness_quartile",
+#'                       level="2")
 #'
+
+
 extract_OR_from_model <- function(model, studied_var, level=NULL){
 
   # Checking type of inputs
@@ -34,12 +37,7 @@ extract_OR_from_model <- function(model, studied_var, level=NULL){
             (model$family$family == "binomial") )
   stopifnot("Input studied_var must be a character" =
             ( class(studied_var) == "character" ) )
-  stopifnot("studied_var is factor, thus a level name should be indicated" =
-              !(
-                is.factor( wdbc.data[[studied_var]] )
-                & is.null(level)
-                )
-            )
+
 
   # Variable to look for
   if ( !is.null(level) ){
@@ -50,6 +48,9 @@ extract_OR_from_model <- function(model, studied_var, level=NULL){
 
   # OR, p extraction from coef
   coef = coef(summary(model))
+  stopifnot("Input level not in model variables" =
+              ( coef_var %in%  rownames(coef) ) )
+
   index_var = which(rownames(coef)==coef_var)
   OR = exp( coef[index_var ,"Estimate"] )
   p = coef[index_var,"Pr(>|z|)"]

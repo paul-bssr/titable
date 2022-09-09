@@ -15,7 +15,7 @@ test_that(
     )
 
     expect_equal(
-      extract_OR_to_str(model_2, studied_var = "compactness_binary"),
+      extract_OR_to_str(model_2, studied_var = "compactness_binary", level="1"),
       "1.544 (0.589-4.043, p=0.375)"
     )
   }

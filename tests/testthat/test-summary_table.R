@@ -54,7 +54,7 @@ test_that("Factor descriptive table works for categorical variables", {
                                 compactness_q_prop[,2], ")", sep="" )
 
   index_start_row <- which(table$label=="compactness_quartile")
-  index_end_row <- nlevels(wdbc.data$compactness_quartile) + index_col -1
+  index_end_row <- nlevels(wdbc.data$compactness_quartile) + index_start_row -1
 
   expect_equal(
     table[ index_start_row:index_end_row, "B"],

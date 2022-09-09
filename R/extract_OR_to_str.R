@@ -23,7 +23,7 @@
 #' extract_OR_to_str(model_1, studied_var = "texture")
 #'
 #' # For categorical variable
-#' extract_OR_to_str(model_1, studied_var = "texture", level="2")
+#' extract_OR_to_str(model_1, studied_var = "compactness_quartile", level="2")
 
 extract_OR_to_str <- function(model, studied_var, level=NULL){
 

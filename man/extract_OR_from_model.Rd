@@ -31,6 +31,7 @@ model_1 <- glm( diagnosis ~ texture + radius + compactness_quartile,
 extract_OR_from_model(model_1, studied_var = "texture")
 
 # For categorical variable
-extract_OR_from_model(model_1, studied_var = "texture", level="2")
+extract_OR_from_model(model_1, studied_var = "compactness_quartile",
+                      level="2")
 
 }

@@ -13,6 +13,8 @@ summary_table(
 )
 }
 \arguments{
+\item{data}{A data.frame containing the data to be analyzed}
+
 \item{studied_vars}{Vector of characters with names of the different
 explanatory variables to study}
 
