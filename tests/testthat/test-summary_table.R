@@ -142,3 +142,65 @@ test_that("Checking OR univariate computation for qualitative variables", {
   )
 
 })
+
+
+
+test_that("Checking OR multivariate computation for quantitative variables", {
+
+  table <- summary_table(data = wdbc.data,
+                         studied_vars = c("radius", "texture",
+                                          "compactness_quartile"),
+                         dependent = "diagnosis",
+                         univariate = TRUE,
+                         multivariate = list(c("smoothness"),
+                                             c("radius", "compactness"))
+                         )
+
+
+  ### Testing radius model1
+  model_1 <- glm( diagnosis ~ radius + smoothness,
+                  data = wdbc.data, family=binomial )
+
+  OR_radius <- round( exp( coef(summary(model_1)) )["radius", "Estimate"],3)
+  IC_min_radius <- round( exp(confint(model_1)["radius","2.5 %"]), 3)
+  IC_max_radius <- round( exp(confint(model_1)["radius","97.5 %"]), 3)
+  p_value <- round( coef(summary(model_1))["radius","Pr(>|z|)"], 3)
+
+
+  OR_radius_str <- paste( round( OR_radius , 3 ) , " (",
+                          round( IC_min_radius, 3 ), "-",
+                          round( IC_max_radius, 3 ), ", p=",
+                          round( p_value, 3 ), ")",
+                          sep=""
+  )
+
+
+  ### Testing radius model2
+  model_2 <- glm( diagnosis ~ radius + compactness,
+                  data = wdbc.data, family=binomial )
+
+  OR_radius_2 <- round( exp( coef(summary(model_2)) )["radius", "Estimate"],3)
+  IC_min_radius_2 <- round( exp(confint(model_2)["radius","2.5 %"]), 3)
+  IC_max_radius_2 <- round( exp(confint(model_2)["radius","97.5 %"]), 3)
+  p_value_2 <- round( coef(summary(model_2))["radius","Pr(>|z|)"], 3)
+
+
+  OR_radius_str_2 <- paste( round( OR_radius_2 , 3 ) , " (",
+                          round( IC_min_radius_2, 3 ), "-",
+                          round( IC_max_radius_2, 3 ), ", p=",
+                          round( p_value_2, 3 ), ")",
+                          sep=""
+  )
+
+  expect_equal(
+    table[ table$label=="radius", "OR (model1)"],
+    OR_radius_str
+  )
+
+  expect_equal(
+    table[ table$label=="radius", "OR (model2)"],
+    OR_radius_str_2
+  )
+
+})
+
