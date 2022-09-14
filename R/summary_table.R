@@ -69,20 +69,12 @@ summary_table <- function(data,
                                family="binomial")
 
       # Assigning the result in output table
-      if (is.factor(data[,col])) {
-        index_row <- which( table$label ==col)
+      table <- extract_OR_to_table( data = data,
+                                    table = table,
+                                    studied_var = col,
+                                    model = model_univariate,
+                                    OR_colname ="OR (univariate)")
 
-        for (level in levels(data[[col]])[-c(1)]){
-          index_row = index_row + 1
-          table[index_row, "OR (univariate)"] <- extract_OR_to_str(
-            model_univariate, studied_var = col, level=level)
-        }
-      } else {
-        table[
-          table$label==col,
-          "OR (univariate)"
-        ] <- extract_OR_to_str(model_univariate, studied_var = col)
-      }
     }
 
 
@@ -103,21 +95,11 @@ summary_table <- function(data,
 
         # Assigning the result in output table
         OR_multi_colname <- paste("OR (model ", counter, ")", sep = "" )
-
-        if (is.factor(data[,col])) {
-          index_row <- which( table$label ==col)
-
-          for (level in levels(data[[col]])[-c(1)]){
-            index_row = index_row + 1
-            table[index_row, OR_multi_colname] <- extract_OR_to_str(
-              model_multivariate, studied_var = col, level=level)
-          }
-        } else {
-          table[
-            table$label==col,
-            OR_multi_colname
-          ] <- extract_OR_to_str(model_multivariate, studied_var = col)
-        }
+        table <- extract_OR_to_table( data = data,
+                                      table = table,
+                                      studied_var = col,
+                                      model = model_multivariate,
+                                      OR_colname = OR_multi_colname )
 
         counter = counter + 1
       }
