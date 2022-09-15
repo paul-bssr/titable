@@ -8,8 +8,6 @@
 #' @param model A glm model corresponding to a logistic regression
 #' (family=binomial)
 #' @param studied_var Name of the variable to explain
-#' @param level A string indicating the level to consider for categorical
-#' variables (default:NULL)
 #'
 #' @return A data.frame with one column containing strings of the form
 #' "OR (IC_min-IC_max, p=pvalue)". It has one row for quantitative, and (n-1)
@@ -21,13 +19,13 @@
 #'                 data=wdbc.data,
 #'                 family="binomial")
 #'
-#' # For quantitative variable
+#' ### With quantitative data
 #' extract_OR_to_str(model_1, studied_var = "texture")
 #'
-#' # For categorical variable
-#' extract_OR_to_str(model_1, studied_var = "compactness_quartile", level="2")
+#' ### With categorical column
+#' extract_OR_to_str(model_1, studied_var = "compactness_quartile")
 
-extract_OR_to_str <- function(model, studied_var, level=NULL){
+extract_OR_to_str <- function(model, studied_var){
 
   # Checking type of inputs
   stopifnot("Model must be binomial family glm" =
@@ -36,7 +34,7 @@ extract_OR_to_str <- function(model, studied_var, level=NULL){
               ( class(studied_var) == "character" ) )
 
   # Computing coefficients
-  coef <- extract_OR_from_model(model, studied_var, level)
+  coef <- extract_OR_from_model(model, studied_var)
 
   # Converting to a string
   str_final <- str_transform_OR_with_IC(coef)
