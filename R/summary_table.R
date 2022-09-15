@@ -5,10 +5,8 @@
 #' given in `studied_vars`. If `univariate` is  `TRUE` OR computed using
 #' univariate logistic regressions are added to a column "Univariable model".
 #' Finally, for each set of adjustment variables in `multivariate` a column
-#' giving the OR after adjustment is added. Remark : if `dependent` variable is
-#' also in the adjustement set, it is automatically removed.
+#' giving the OR after adjustment is added.
 #'
-#' @param data A data.frame containing the data to be analyzed
 #' @param dependent Character input containing the name of the binary variable
 #' to explain
 #' @param studied_vars Vector of characters with names of the different
@@ -31,17 +29,17 @@
 #'
 #' @examples
 #' summary_table(data = wdbc.data,
-#'               studied_vars = c("radius", "texture", "compactness_quartile"),
+#'               studied_vars = c("radius", "texture"),
 #'               dependent = "diagnosis",
 #'               univariate = FALSE
 #'              )
 #'
 #' summary_table(data = wdbc.data,
-#'               studied_vars = c("radius", "texture", "compactness_quartile"),
+#'               studied_vars = c("radius", "texture"),
 #'               dependent = "diagnosis" )
 #'
 #' summary_table(data = wdbc.data,
-#'               studied_vars = c("radius", "texture", "compactness_quartile"),
+#'               studied_vars = c("radius", "texture"),
 #'               dependent = "diagnosis",
 #'               multivariate = list(c("smoothness", "texture"),
 #'                                   c("concavity", "symmetry"))
@@ -65,19 +63,28 @@ summary_table <- function(data,
       print ('Computing univariate')
       frm <- as.formula(paste(dependent, "~", col))
       model_univariate <- glm( formula = frm,
-                               data=data,
+                               data=wdbc.data,
                                family="binomial")
       coef_summary <- extract_OR_to_str(model_univariate, studied_var = col)
 
 
       # Assigning the result in output table
-      table <- extract_OR_to_table( data = data,
-                                    table = table,
-                                    studied_var = col,
-                                    model = model_univariate,
-                                    OR_colname ="OR (univariate)")
-    }
+      if (is.factor(data[,col])) {
+        index_col <- which(table$label==col)
+        nlevels <- nlevels(data[,col])
+        index_col_end <- index_col+nlevels-1
+        table[
+          index_col+1:index_col_end,
+          "OR (univariate)"
+          ] <- coef_summary[,1]
 
+      } else {
+        table[
+          table$label==col,
+          "OR (univariate)"
+          ] <- coef_summary[1,1]
+      }
+    }
 
     ## Adding multivariable models
     if (is.null(multivariate)==FALSE){
@@ -86,23 +93,19 @@ summary_table <- function(data,
         str_adj <- paste( adjustement_set[adjustement_set != col],
                           collapse = " + ")
         print ( paste('Computing multivariate model on', str_adj) )
-
-        # Computing multivariate model
         frm <- as.formula(paste(dependent, "~", col, "+", str_adj))
         model_multivariate <- glm( formula = frm,
-                                   data=data,
+                                   data=wdbc.data,
                                    family="binomial")
 
-
         # Assigning the result in output table
-        OR_multi_colname <- paste("OR (model ", counter, ")", sep = "" )
-        table <- extract_OR_to_table( data = data,
-                                      table = table,
-                                      studied_var = col,
-                                      model = model_multivariate,
-                                      OR_colname = OR_multi_colname )
+        table[
+          table$label==col,
+          paste("OR (model ", counter, ")", sep = "" )
+          ] <- extract_OR_to_str(model_univariate, studied_var = col)
 
         counter = counter + 1
+
       }
     }
 

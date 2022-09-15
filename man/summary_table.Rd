@@ -13,8 +13,6 @@ summary_table(
 )
 }
 \arguments{
-\item{data}{A data.frame containing the data to be analyzed}
-
 \item{studied_vars}{Vector of characters with names of the different
 explanatory variables to study}
 
@@ -42,22 +40,21 @@ for a given \code{dependent} variable with one line for each explanatory variabl
 given in \code{studied_vars}. If \code{univariate} is  \code{TRUE} OR computed using
 univariate logistic regressions are added to a column "Univariable model".
 Finally, for each set of adjustment variables in \code{multivariate} a column
-giving the OR after adjustment is added. Remark : if \code{dependent} variable is
-also in the adjustement set, it is automatically removed.
+giving the OR after adjustment is added.
 }
 \examples{
 summary_table(data = wdbc.data,
-              studied_vars = c("radius", "texture", "compactness_quartile"),
+              studied_vars = c("radius", "texture"),
               dependent = "diagnosis",
               univariate = FALSE
              )
 
 summary_table(data = wdbc.data,
-              studied_vars = c("radius", "texture", "compactness_quartile"),
+              studied_vars = c("radius", "texture"),
               dependent = "diagnosis" )
 
 summary_table(data = wdbc.data,
-              studied_vars = c("radius", "texture", "compactness_quartile"),
+              studied_vars = c("radius", "texture"),
               dependent = "diagnosis",
               multivariate = list(c("smoothness", "texture"),
                                   c("concavity", "symmetry"))
