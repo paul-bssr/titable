@@ -1,8 +1,7 @@
 #' @title Compute numeric values for OR, IC, pvalue for a glm model
 #'
 #' @description A function to compute numeric values for OR, IC, pvalue from a
-#' fitted glm model corresponding to a Logistic Regression (family="binomial").
-#' It takes into account quantitative and categorical data.
+#' fitted glm model corresponding to a Logistic Regression (family="binomial")
 #'
 #' @param model A glm model corresponding to a logistic regression
 #' (family=binomial)
@@ -10,9 +9,7 @@
 #' @param level A string indicating the level to consider for categorical
 #' variables (default:NULL)
 #'
-#' @return A data.frame containing 4 numeric columns : OR, IC_min, IC_max, p. It
-#' has one row for quantitative, and (n-1) row for categorical data (with n the
-#' number of categories)
+#' @return A vector containing 4 numeric values : OR, IC_min, IC_max, p
 #'
 #' @import stats
 #'

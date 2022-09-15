@@ -11,9 +11,7 @@
 #' @param level A string indicating the level to consider for categorical
 #' variables (default:NULL)
 #'
-#' @return A data.frame with one column containing strings of the form
-#' "OR (IC_min-IC_max, p=pvalue)". It has one row for quantitative, and (n-1)
-#' row for categorical data (with n the number of categories)
+#' @return A string of the form "OR (IC_min-IC_max, p=pvalue)
 #' @export
 #'
 #' @examples
@@ -39,7 +37,11 @@ extract_OR_to_str <- function(model, studied_var, level=NULL){
   coef <- extract_OR_from_model(model, studied_var, level)
 
   # Converting to a string
-  str_final <- str_transform_OR_with_IC(coef)
-
+  str_final <- str_transform_OR_with_IC(
+    OR = coef[1],
+    IC_min = coef[2],
+    IC_max = coef[3],
+    pvalue = coef[4]
+  )
   return(str_final)
 }

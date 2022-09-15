@@ -67,8 +67,6 @@ summary_table <- function(data,
       model_univariate <- glm( formula = frm,
                                data=data,
                                family="binomial")
-      coef_summary <- extract_OR_to_str(model_univariate, studied_var = col)
-
 
       # Assigning the result in output table
       table <- extract_OR_to_table( data = data,
@@ -76,6 +74,7 @@ summary_table <- function(data,
                                     studied_var = col,
                                     model = model_univariate,
                                     OR_colname ="OR (univariate)")
+
     }
 
 
