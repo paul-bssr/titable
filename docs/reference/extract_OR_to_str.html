@@ -45,7 +45,7 @@ result in a string of the form "OR (IC_min-IC_max, p=pvalue)"</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extract_OR_to_str</span><span class="op">(</span><span class="va">model</span>, <span class="va">studied_var</span>, level <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extract_OR_to_str</span><span class="op">(</span><span class="va">model</span>, <span class="va">studied_var</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -57,11 +57,6 @@ result in a string of the form "OR (IC_min-IC_max, p=pvalue)"</p>
 
 <dt>studied_var</dt>
 <dd><p>Name of the variable to explain</p></dd>
-
-
-<dt>level</dt>
-<dd><p>A string indicating the level to consider for categorical
-variables (default:NULL)</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -77,19 +72,12 @@ variables (default:NULL)</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span> <span class="va">diagnosis</span> <span class="op">~</span> <span class="va">texture</span> <span class="op">+</span> <span class="va">radius</span> <span class="op">+</span> <span class="va">compactness_quartile</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span> <span class="va">diagnosis</span> <span class="op">~</span> <span class="va">texture</span> <span class="op">+</span> <span class="va">radius</span> <span class="op">+</span> <span class="va">perimeter</span>,</span></span>
 <span class="r-in"><span>                data<span class="op">=</span><span class="va">wdbc.data</span>,</span></span>
 <span class="r-in"><span>                family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># For quantitative variable</span></span></span>
 <span class="r-in"><span><span class="fu">extract_OR_to_str</span><span class="op">(</span><span class="va">model_1</span>, studied_var <span class="op">=</span> <span class="st">"texture"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Waiting for profiling to be done...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1.289 (1.182-1.415, p=0)"</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># For categorical variable</span></span></span>
-<span class="r-in"><span><span class="fu">extract_OR_to_str</span><span class="op">(</span><span class="va">model_1</span>, studied_var <span class="op">=</span> <span class="st">"compactness_quartile"</span>, level<span class="op">=</span><span class="st">"2"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Waiting for profiling to be done...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1.126 (0.365-3.622, p=0.838)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1.275 (1.169-1.398, p=0)"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
