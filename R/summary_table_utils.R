@@ -6,6 +6,10 @@
 #' @param studied_var A character containing name of the variable of interest
 #' @param model GLM model to use for OR extraction
 #' @param OR_colname A character containing name of the final column
+#' @param digits An integer input giving the number of digits for rounding OR
+#' and IC
+#' @param digits_p An integer input giving the number of significant digits for
+#' p_value (use of signif function)
 #'
 #' @return table data.frame completed
 #'
@@ -16,22 +20,31 @@ extract_OR_to_table <- function(data,
                                 table,
                                 studied_var,
                                 model,
-                                OR_colname
+                                OR_colname,
+                                digits=3,
+                                digits_p=1
 ){
   if (is.factor(data[, studied_var])) {
     index_row <- which( table$label == studied_var)
 
     for (level in levels(data[[studied_var]])[-c(1)]){
       index_row = index_row + 1
-      table[index_row, OR_colname] <- extract_OR_to_str(model=model,
-                                                        studied_var=studied_var,
-                                                        level=level )
+      table[index_row, OR_colname] <- extract_OR_to_str(model = model,
+                                                        studied_var = studied_var,
+                                                        level = level,
+                                                        digits = digits,
+                                                        digits_p = digits_p
+                                                        )
     }
   } else {
     table[
       table$label==studied_var,
       OR_colname
-    ] <- extract_OR_to_str(model, studied_var = studied_var)
+    ] <- extract_OR_to_str(model,
+                           studied_var = studied_var,
+                           digits = digits,
+                           digits_p = digits_p
+                           )
   }
   return(table)
 }

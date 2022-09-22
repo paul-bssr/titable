@@ -9,7 +9,9 @@ summary_table(
   studied_vars,
   dependent,
   univariate = TRUE,
-  multivariate = NULL
+  multivariate = NULL,
+  digits = 3,
+  digits_p = 1
 )
 }
 \arguments{
@@ -26,6 +28,12 @@ table}
 
 \item{multivariate}{List of character vectors containing different sets to be
 used for adjustement.}
+
+\item{digits}{An integer input giving the number of digits for rounding OR
+and IC}
+
+\item{digits_p}{An integer input giving the number of significant digits for
+p_value (use of signif function)}
 }
 \value{
 A data.frame containing :

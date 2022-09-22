@@ -5,7 +5,15 @@
 \title{Function to complete OR part of summary table for a given quantitative or
 categorical variable}
 \usage{
-extract_OR_to_table(data, table, studied_var, model, OR_colname)
+extract_OR_to_table(
+  data,
+  table,
+  studied_var,
+  model,
+  OR_colname,
+  digits = 3,
+  digits_p = 1
+)
 }
 \arguments{
 \item{data}{A data.frame containing the data for Logistic Regression}
@@ -17,6 +25,12 @@ extract_OR_to_table(data, table, studied_var, model, OR_colname)
 \item{model}{GLM model to use for OR extraction}
 
 \item{OR_colname}{A character containing name of the final column}
+
+\item{digits}{An integer input giving the number of digits for rounding OR
+and IC}
+
+\item{digits_p}{An integer input giving the number of significant digits for
+p_value (use of signif function)}
 }
 \value{
 table data.frame completed

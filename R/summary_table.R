@@ -17,6 +17,10 @@
 #' table
 #' @param multivariate List of character vectors containing different sets to be
 #' used for adjustement.
+#' @param digits An integer input giving the number of digits for rounding OR
+#' and IC
+#' @param digits_p An integer input giving the number of significant digits for
+#' p_value (use of signif function)
 #'
 #' @return A data.frame containing :
 #' \itemize{
@@ -51,7 +55,9 @@ summary_table <- function(data,
                           studied_vars,
                           dependent,
                           univariate=TRUE,
-                          multivariate=NULL) {
+                          multivariate=NULL,
+                          digits = 3,
+                          digits_p = 1) {
   # Creation table skeleton
   table <- summary_factorlist(data, dependent, studied_vars)
 
@@ -73,7 +79,10 @@ summary_table <- function(data,
                                     table = table,
                                     studied_var = col,
                                     model = model_univariate,
-                                    OR_colname ="OR (univariate)")
+                                    OR_colname ="OR (univariate)",
+                                    digits = digits,
+                                    digits_p = digits_p
+                                    )
 
     }
 
@@ -99,7 +108,9 @@ summary_table <- function(data,
                                       table = table,
                                       studied_var = col,
                                       model = model_multivariate,
-                                      OR_colname = OR_multi_colname )
+                                      OR_colname = OR_multi_colname,
+                                      digits = digits,
+                                      digits_p = digits_p)
 
         counter = counter + 1
       }

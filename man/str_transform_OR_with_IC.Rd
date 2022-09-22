@@ -20,8 +20,8 @@ interval associated to OR}
 \item{digits}{An integer input giving the number of digits for rounding OR
 and IC}
 
-\item{digits_p}{An integer input giving the number of digits for rounding
-p_value}
+\item{digits_p}{An integer input giving the number of significant digits for
+p_value (use of signif function)}
 }
 \value{
 a string "OR (IC_min-IC_max, p=pvalue)"
