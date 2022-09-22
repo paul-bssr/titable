@@ -11,8 +11,8 @@
 #' @param pvalue A numeric input corresponding to the pvalue associated to OR
 #' @param digits An integer input giving the number of digits for rounding OR
 #' and IC
-#' @param digits_p An integer input giving the number of digits for rounding
-#' p_value
+#' @param digits_p An integer input giving the number of significant digits for
+#' p_value (use of signif function)
 #'
 #' @return a string "OR (IC_min-IC_max, p=pvalue)"
 #'
@@ -43,7 +43,7 @@ str_transform_OR_with_IC <- function(OR, IC_min, IC_max, pvalue, digits=3,
     "-",
     as.character( round( IC_max, digits = digits ) ),
     ", p=",
-    as.character( round( pvalue, digits = digits_p ) ),
+    as.character( signif( pvalue, digits = digits_p ) ),
     ")",
     sep=""
   )
