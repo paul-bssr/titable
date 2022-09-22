@@ -10,6 +10,10 @@
 #' @param studied_var Name of the variable to explain
 #' @param level A string indicating the level to consider for categorical
 #' variables (default:NULL)
+#' @param digits An integer input giving the number of digits for rounding OR
+#' and IC
+#' @param digits_p An integer input giving the number of significant digits for
+#' p_value (use of signif function)
 #'
 #' @return A string of the form "OR (IC_min-IC_max, p=pvalue)
 #' @export
@@ -25,7 +29,12 @@
 #' # For categorical variable
 #' extract_OR_to_str(model_1, studied_var = "compactness_quartile", level="2")
 
-extract_OR_to_str <- function(model, studied_var, level=NULL){
+extract_OR_to_str <- function(model,
+                              studied_var,
+                              level = NULL,
+                              digits = 3,
+                              digits_p = 1
+                              ){
 
   # Checking type of inputs
   stopifnot("Model must be binomial family glm" =
@@ -41,7 +50,9 @@ extract_OR_to_str <- function(model, studied_var, level=NULL){
     OR = coef[1],
     IC_min = coef[2],
     IC_max = coef[3],
-    pvalue = coef[4]
+    pvalue = coef[4],
+    digits = digits,
+    digits_p = digits_p
   )
   return(str_final)
 }
