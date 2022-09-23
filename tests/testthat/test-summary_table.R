@@ -1,3 +1,11 @@
+test_that("Exceptions work", {
+  expect_error(
+    summary_table(data = wdbc.data,
+                  studied_vars = c("rardius", "texture")),
+    "Column rardius of studied_vars not in data columns"
+  )
+})
+
 test_that("Factor descriptive table works for quantitative variables", {
 
   table <- summary_table(data = wdbc.data,

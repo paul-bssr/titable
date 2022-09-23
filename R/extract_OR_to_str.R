@@ -41,6 +41,8 @@ extract_OR_to_str <- function(model,
               (model$family$family == "binomial") )
   stopifnot("Input studied_var must be a character" =
               ( class(studied_var) == "character" ) )
+  stopifnot("Input studied_var not in model variables" =
+              ( studied_var %in% names( model$model )[-1] ) )
 
   # Computing coefficients
   coef <- extract_OR_from_model(model, studied_var, level)

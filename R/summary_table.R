@@ -60,6 +60,14 @@ summary_table <- function(data,
                           multivariate=NULL,
                           digits = 3,
                           digits_p = 1) {
+  # Checks
+  for (col in studied_vars){
+    if ( !(col %in% colnames(data)) ) {
+      str_check_col = paste("Column", col, "of studied_vars not in data columns")
+      stop(str_check_col)
+    }
+  }
+
   # Creation table skeleton
   table <- summary_factorlist(data, dependent, studied_vars)
 

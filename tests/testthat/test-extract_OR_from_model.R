@@ -39,7 +39,7 @@ test_that(
 
 
 test_that(
-  "Rejection of non-binomial glm models (i.e. not logistic regression)", {
+  "Checking processes work", {
 
     model_1 <- glm( diagnosis ~ texture + radius + perimeter,
                     data=wdbc.data,
@@ -50,6 +50,9 @@ test_that(
 
     expect_error( extract_OR_from_model(model_1, studied_var = 3),
                   "Input studied_var must be a character")
+
+    expect_error( extract_OR_from_model(model_1, studied_var = "area"),
+                  "Input studied_var not in model variables")
 
     expect_error( extract_OR_from_model(model_2, studied_var = "radius"),
                   "Model must be binomial family glm")
