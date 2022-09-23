@@ -129,6 +129,8 @@ summary_table <- function(data,
     cat(paste(col, "finished\n\n"))
   }
 
+  table[is.na(table)] <- "-"
+
   return(table)
 
 }
