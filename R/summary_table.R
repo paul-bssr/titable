@@ -130,6 +130,9 @@ summary_table <- function(data,
   }
 
   table[is.na(table)] <- "-"
+  table[ table$levels != "Mean (SD)", "levels"] <- paste(
+    table[ table$levels != "Mean (SD)", "levels"], ", N(%)", sep=""
+    )
 
   return(table)
 
