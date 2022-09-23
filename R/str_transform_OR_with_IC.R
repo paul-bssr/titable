@@ -20,8 +20,8 @@
 #'
 #' @examples
 #' str_transform_OR_with_IC(OR=2.02, IC_min=1.803, IC_max=2.405, pvalue=0.0025)
-#' str_transform_OR_with_IC(OR=2.02, IC_min=1.803, IC_max=2.405, pvalue=0.0025,
-#' digits=1, digits_p=4)
+#' str_transform_OR_with_IC(OR=2.02, IC_min=1.807, IC_max=2.403, pvalue=0.02564,
+#' digits=2, digits_p=3)
 #'
 
 str_transform_OR_with_IC <- function(OR, IC_min, IC_max, pvalue, digits=3,
