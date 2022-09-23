@@ -23,6 +23,11 @@ test_that(
                         digits=2, digits_p = 2),
       "1.54 (0.59-4.04, p=0.38)"
     )
+    expect_equal(
+      extract_OR_to_str(model_2, studied_var = "compactness_binary", level="1",
+                        digits=2, digits_p = 2, p_limit=0.5),
+      "1.54 (0.59-4.04, p<0.5)"
+    )
   }
 )
 

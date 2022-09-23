@@ -21,6 +21,8 @@
 #' and IC
 #' @param digits_p An integer input giving the number of significant digits for
 #' p_value (use of signif function)
+#' @param p_limit A float giving the limit value below which pvalue is printed
+#' as "<p_limit"
 #'
 #' @return A data.frame containing :
 #' \itemize{
@@ -50,7 +52,8 @@
 #'               multivariate = list(c("smoothness", "texture"),
 #'                                   c("concavity", "symmetry")),
 #'               digits = 2,
-#'               digits_p = 2
+#'               digits_p = 2,
+#'               p_limit=0.001
 #'              )
 
 summary_table <- function(data,
@@ -59,7 +62,9 @@ summary_table <- function(data,
                           univariate=TRUE,
                           multivariate=NULL,
                           digits = 3,
-                          digits_p = 1) {
+                          digits_p = 1,
+                          p_limit = NULL
+                          ) {
   # Checks
   for (col in studied_vars){
     if ( !(col %in% colnames(data)) ) {
@@ -91,7 +96,8 @@ summary_table <- function(data,
                                     model = model_univariate,
                                     OR_colname ="OR (univariate)",
                                     digits = digits,
-                                    digits_p = digits_p
+                                    digits_p = digits_p,
+                                    p_limit = p_limit
                                     )
 
     }
@@ -120,7 +126,8 @@ summary_table <- function(data,
                                       model = model_multivariate,
                                       OR_colname = OR_multi_colname,
                                       digits = digits,
-                                      digits_p = digits_p)
+                                      digits_p = digits_p,
+                                      p_limit = p_limit)
 
         counter = counter + 1
       }
