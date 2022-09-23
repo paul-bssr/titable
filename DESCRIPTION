@@ -14,7 +14,8 @@ Imports:
     dplyr,
     finalfit,
     lars,
-    testthat
+    testthat,
+    xlsx
 Config/testthat/edition: 3
 Depends: 
     R (>= 2.10)
