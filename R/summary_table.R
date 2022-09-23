@@ -48,7 +48,9 @@
 #'               studied_vars = c("radius", "texture", "compactness_quartile"),
 #'               dependent = "diagnosis",
 #'               multivariate = list(c("smoothness", "texture"),
-#'                                   c("concavity", "symmetry"))
+#'                                   c("concavity", "symmetry")),
+#'               digits = 2,
+#'               digits_p = 2
 #'              )
 
 summary_table <- function(data,
