@@ -104,7 +104,7 @@ save_summary_table <- function(table,
   }
 
   # Adding dataframe to sheet
-  list_result_cells <- list(`1`=cell_styles[[3]])
+  list_result_cells <- list(`1`=cell_styles[[3]], `2`=cell_styles[[6]])
   for (i in 3:length(table)){
     name <- as.character(i)
     list_result_cells[[name]] <- cell_styles[[5]]
@@ -174,9 +174,13 @@ set_cell_styles <- function(wb){
   RESULTS_STYLE <- CellStyle(wb) +
     Alignment(h="ALIGN_RIGHT", vertical="VERTICAL_CENTER")
 
+  # Style for descriptive column
+  DESCRIPTIVE_COL_STYLE <- CellStyle(wb) +
+    Alignment(h="ALIGN_LEFT", vertical="VERTICAL_CENTER")
+
   output_styles <- list(TITLE_STYLE, SUB_TITLE_STYLE,
                      TABLE_ROWNAMES_STYLE, TABLE_COLNAMES_STYLE,
-                     RESULTS_STYLE)
+                     RESULTS_STYLE, DESCRIPTIVE_COL_STYLE)
 
   return( output_styles )
 
