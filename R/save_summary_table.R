@@ -126,6 +126,9 @@ save_summary_table <- function(table,
   rows  <- getRows(sheet )
   setRowHeight(rows, multiplier = 2)
 
+  # Change font for significant values
+  add_font_for_significant(wb, sheet, table)
+
   # Workbook saving
   saveWorkbook(wb, file)
 }
@@ -185,3 +188,35 @@ set_cell_styles <- function(wb){
   return( output_styles )
 
 }
+
+extract_pvalue_from_char <- function(char_variable){
+  pvalue <-as.numeric(str_extract(char_variable, "(?<=p=).*(?=\\))"))
+  return (pvalue)
+}
+
+add_font_for_significant <- function(wb, sheet, table){
+  # Extracting pvalues
+  pvalue_table <- data.frame(
+    lapply(table[, 5:length(table)], extract_pvalue_from_char)
+  )
+
+  # Computing indices of columns with significant p in excel
+  index_significant_values <- data.frame(
+    which( pvalue_table <= 0.05, arr.ind = TRUE)
+  )
+  index_significant_values$row <- index_significant_values$row+4
+  index_significant_values$col <- index_significant_values$col+4
+
+  # Filling corresponding cells
+  rows <- getRows(sheet, rowIndex = 5:(4+nrow(table)) )
+  cells <- getCells( rows )
+  list_cellnames <- paste(index_significant_values$row,
+                          index_significant_values$col,
+                          sep=".")
+  for ( cellname in list_cellnames ){
+    cs <- c( CellStyle(wb) +
+               Alignment(h="ALIGN_LEFT", vertical="VERTICAL_CENTER") +
+               Fill(backgroundColor="lavender") )
+    setCellStyle(cells[[cellname]], cs)
+    }
+  }
