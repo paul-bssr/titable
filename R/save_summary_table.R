@@ -77,10 +77,15 @@ save_summary_table <- function(table,
 
 
   # Adding dataframe to sheet
-  addDataFrame(table, sheet, startRow=3, startColumn=1, row.names = FALSE,
+  list_result_cells <- list(`1`=cell_styles[[3]])
+  for (i in 3:length(table)){
+    name <- as.character(i)
+    list_result_cells[[name]] <- cell_styles[[5]]
+  }
+  addDataFrame(table, sheet, startRow=4, startColumn=1, row.names = FALSE,
                colnamesStyle = cell_styles[[4]],
                rownamesStyle = cell_styles[[3]],
-               colStyle=list(`1`=cell_styles[[3]])
+               colStyle=list_result_cells
                )
 
 
@@ -89,6 +94,10 @@ save_summary_table <- function(table,
   setColumnWidth(sheet, colIndex=c(1), colWidth=20)
   setColumnWidth(sheet, colIndex=c(2:4), colWidth=11)
   setColumnWidth(sheet, colIndex=c(5:ncol(table)), colWidth=32)
+
+  # Change row height
+  rows  <- getRows(sheet )
+  setRowHeight(rows, multiplier = 2)
 
   # Workbook saving
   saveWorkbook(wb, file)
@@ -122,15 +131,26 @@ set_cell_styles <- function(wb){
   SUB_TITLE_STYLE <- c( CellStyle(wb) +
     Font(wb,  heightInPoints=14,
          isItalic=TRUE, isBold=FALSE))
-  # Styles for the data table row/column names
-  TABLE_ROWNAMES_STYLE <- c( CellStyle(wb) + Font(wb, isBold=TRUE) )
+
+  # Styles for the data table rownames
+  TABLE_ROWNAMES_STYLE <- CellStyle(wb) +
+    Font(wb, isBold=TRUE) +
+    Alignment(wrapText=TRUE, vertical="VERTICAL_CENTER")
+
+  # Styles for the data table column names
   TABLE_COLNAMES_STYLE <- c( CellStyle(wb) + Font(wb, isBold=TRUE) +
-    Alignment(wrapText=TRUE, horizontal="ALIGN_CENTER") +
+    Alignment(wrapText=TRUE, h="ALIGN_CENTER", v="VERTICAL_CENTER") +
     Border(color="black", position=c("TOP", "BOTTOM"),
            pen=c("BORDER_THIN", "BORDER_THICK")))
 
+  # Styles for results cells
+  RESULTS_STYLE <- CellStyle(wb) +
+    Alignment(h="ALIGN_RIGHT", vertical="VERTICAL_CENTER")
+
   output_styles <- list(TITLE_STYLE, SUB_TITLE_STYLE,
-                     TABLE_ROWNAMES_STYLE, TABLE_COLNAMES_STYLE)
+                     TABLE_ROWNAMES_STYLE, TABLE_COLNAMES_STYLE,
+                     RESULTS_STYLE)
+
   return( output_styles )
 
 }
