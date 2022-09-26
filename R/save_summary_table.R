@@ -16,6 +16,8 @@
 #' @param append Boolean. If TRUE, save_summary_table will open an existing
 #' file. If FALSE (default), it creates a new file and erase already existing
 #' file with same name.
+#' @param list_variables_renaming A list whose names correspond to variables to
+#' rename and values to the new names to use
 #'
 #' @return
 #' @export
@@ -30,12 +32,16 @@
 #'                                           )
 #' # Creating an excel file
 #' save_summary_table(table, filepath="data/", filename="test",
-#'                    sheetname = "test_sheet_1", title = "Regression logistic study",
-#'                    subtitle = "This is an interesting study.")
+#'                    sheetname = "test_sheet_1",
+#'                    title = "Regression logistic study",
+#'                    subtitle = "This is an interesting study.",
+#'                    list_variables_renaming = list("compactness_quartile"="Compactness quartile")
+#'                    )
 #'
 #' # Adding a sheet to an existing excel file
 #' save_summary_table(table, filepath="data/", filename="test",
-#'                    sheetname = "test_sheet_2", title = "Regression logistic study",
+#'                    sheetname = "test_sheet_2",
+#'                    title = "Regression logistic study",
 #'                    subtitle = "This is an interesting study.", append=TRUE)
 #'
 
@@ -45,7 +51,8 @@ save_summary_table <- function(table,
                                sheetname,
                                title = "",
                                subtitle = "",
-                               append = FALSE
+                               append = FALSE,
+                               list_variables_renaming = list()
                                ){
   # create a new workbook for outputs
   file = paste( filepath, filename, ".xlsx", sep="")
@@ -75,6 +82,13 @@ save_summary_table <- function(table,
                 title=subtitle,
                 titleStyle = cell_styles[[2]])
 
+  # Renaming columns in data.frame
+  for (varname in names( list_variables_renaming )){
+    table$label <- replace(table$label,
+                           table$label==varname,
+                           list_variable_renaming[[varname]]
+                           )
+  }
 
   # Adding dataframe to sheet
   list_result_cells <- list(`1`=cell_styles[[3]])
