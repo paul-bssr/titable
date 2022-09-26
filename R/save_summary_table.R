@@ -20,6 +20,8 @@
 #' rename and values to the new names to use
 #' @param list_columns_renaming A list whose names correspond to columns to
 #' rename and values to the new names to use
+#' @param underline_p A boolean, indicating whether to add a font or not, to
+#' significant pvalues (default: True)
 #'
 #' @return
 #' @export
@@ -57,7 +59,8 @@ save_summary_table <- function(table,
                                subtitle = "",
                                append = FALSE,
                                list_variables_renaming = list(),
-                               list_columns_renaming = default_columns
+                               list_columns_renaming = default_columns,
+                               underline_p = TRUE
                                ){
   # create a new workbook for outputs
   file = paste( filepath, filename, ".xlsx", sep="")
@@ -71,12 +74,9 @@ save_summary_table <- function(table,
   # Creating a sheet
   sheet <- createSheet(wb, sheetName = sheetname)
 
-  # Initializing cell styles
-  cell_styles <- set_cell_styles(wb)
-
   # Add title
   xlsx.addTitle(sheet, rowIndex=1, title=title,
-                titleStyle = cell_styles[[1]])
+                titleStyle = set_custom_style(wb, list_title))
 
   # Add sub title
   subtitle <- paste(subtitle,
@@ -85,7 +85,7 @@ save_summary_table <- function(table,
                     sep='')
   xlsx.addTitle(sheet, rowIndex=2,
                 title=subtitle,
-                titleStyle = cell_styles[[2]])
+                titleStyle = set_custom_style(wb, list_subtitle))
 
   # Renaming label column values in data.frame
   for (varname in names( list_variables_renaming )){
@@ -104,14 +104,15 @@ save_summary_table <- function(table,
   }
 
   # Adding dataframe to sheet
-  list_result_cells <- list(`1`=cell_styles[[3]], `2`=cell_styles[[6]])
+  list_result_cells <- list(`1` = set_custom_style(wb, list_rownames),
+                            `2` = set_custom_style(wb, list_descriptive))
   for (i in 3:length(table)){
     name <- as.character(i)
-    list_result_cells[[name]] <- cell_styles[[5]]
+    list_result_cells[[name]] <-  set_custom_style(wb, list_results)
   }
   addDataFrame(table, sheet, startRow=4, startColumn=1, row.names = FALSE,
-               colnamesStyle = cell_styles[[4]],
-               rownamesStyle = cell_styles[[3]],
+               colnamesStyle = set_custom_style(wb, list_colnames),
+               rownamesStyle = set_custom_style(wb, list_rownames),
                colStyle=list_result_cells
                )
 
@@ -152,42 +153,75 @@ xlsx.addTitle <- function(sheet, rowIndex, title, titleStyle){
 }
 
 
-set_cell_styles <- function(wb){
-  # Define some cell styles
-  #++++++++++++++++++++
-  # Title and sub title styles
-  TITLE_STYLE <- c( CellStyle(wb)+ Font(wb,  heightInPoints=16,
-                                     color="blue", isBold=TRUE, underline=1) )
-  SUB_TITLE_STYLE <- c( CellStyle(wb) +
-    Font(wb,  heightInPoints=14,
-         isItalic=TRUE, isBold=FALSE))
-
-  # Styles for the data table rownames
-  TABLE_ROWNAMES_STYLE <- CellStyle(wb) +
-    Font(wb, isBold=TRUE) +
-    Alignment(wrapText=TRUE, vertical="VERTICAL_CENTER")
-
-  # Styles for the data table column names
-  TABLE_COLNAMES_STYLE <- c( CellStyle(wb) + Font(wb, isBold=TRUE) +
-    Alignment(wrapText=TRUE, h="ALIGN_CENTER", v="VERTICAL_CENTER") +
-    Border(color="black", position=c("TOP", "BOTTOM"),
-           pen=c("BORDER_THIN", "BORDER_THICK")))
-
-  # Styles for results cells
-  RESULTS_STYLE <- CellStyle(wb) +
-    Alignment(h="ALIGN_RIGHT", vertical="VERTICAL_CENTER")
-
-  # Style for descriptive column
-  DESCRIPTIVE_COL_STYLE <- CellStyle(wb) +
-    Alignment(h="ALIGN_LEFT", vertical="VERTICAL_CENTER")
-
-  output_styles <- list(TITLE_STYLE, SUB_TITLE_STYLE,
-                     TABLE_ROWNAMES_STYLE, TABLE_COLNAMES_STYLE,
-                     RESULTS_STYLE, DESCRIPTIVE_COL_STYLE)
-
-  return( output_styles )
-
+set_custom_style <- function(wb, list_args){
+  custom_style <- CellStyle(wb) +
+    do.call( Font, append( list(wb), list_args$list_font ) ) +
+    do.call( Alignment, append( list(wb), list_args$list_alignment ) ) +
+    #do.call( Border, list(list(wb), list_args$list_border) )
+  return(custom_style)
 }
+
+list_title <- list(
+  list_font = list(
+    heightInPoints = 16,
+    color = "blue",
+    isBold = TRUE,
+    underline = 1)#,
+  #list_alignment = list(wrapText=TRUE, vertical="VERTICAL_CENTER", h="ALIGN_CENTER"),
+  #list_border = list("black")
+  )
+
+list_subtitle = list(
+  list_font = list(
+    heightInPoints=14,
+    isItalic=TRUE,
+    isBold=FALSE)
+)
+
+list_rownames <- list(
+  list_font  = list(
+    isBold = TRUE
+  ),
+  list_alignment = list(
+    wrapText=TRUE,
+    vertical="VERTICAL_CENTER"
+  )
+)
+
+# Style for the data table column names
+list_colnames <- list(
+  list_font  = list(
+    isBold = TRUE
+  ),
+  list_alignment = list(
+    wrapText=TRUE,
+    h="ALIGN_CENTER",
+    vertical="VERTICAL_CENTER"
+  ),
+  list_border = list(
+    color="black",
+    position=c("TOP", "BOTTOM"),
+    pen=c("BORDER_THIN", "BORDER_THICK")
+  )
+)
+
+# Style for results cells
+list_results <- list(
+  list_alignment = list(
+    wrapText=TRUE,
+    h="ALIGN_RIGHT",
+    vertical="VERTICAL_CENTER"
+  )
+)
+
+# Style for descriptive column
+list_descriptive <- list(
+  list_alignment = list(
+    h="ALIGN_LEFT",
+    vertical="VERTICAL_CENTER"
+  )
+)
+
 
 extract_pvalue_from_char <- function(char_variable){
   pvalue <-as.numeric(str_extract(char_variable, "(?<=p=).*(?=\\))"))
