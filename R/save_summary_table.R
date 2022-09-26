@@ -18,6 +18,8 @@
 #' file with same name.
 #' @param list_variables_renaming A list whose names correspond to variables to
 #' rename and values to the new names to use
+#' @param list_columns_renaming A list whose names correspond to columns to
+#' rename and values to the new names to use
 #'
 #' @return
 #' @export
@@ -45,6 +47,8 @@
 #'                    subtitle = "This is an interesting study.", append=TRUE)
 #'
 
+default_columns <- list("label"="Variables", "levels"="")
+
 save_summary_table <- function(table,
                                filepath,
                                filename,
@@ -52,7 +56,8 @@ save_summary_table <- function(table,
                                title = "",
                                subtitle = "",
                                append = FALSE,
-                               list_variables_renaming = list()
+                               list_variables_renaming = list(),
+                               list_columns_renaming = default_columns
                                ){
   # create a new workbook for outputs
   file = paste( filepath, filename, ".xlsx", sep="")
@@ -82,12 +87,20 @@ save_summary_table <- function(table,
                 title=subtitle,
                 titleStyle = cell_styles[[2]])
 
-  # Renaming columns in data.frame
+  # Renaming label column values in data.frame
   for (varname in names( list_variables_renaming )){
     table$label <- replace(table$label,
                            table$label==varname,
                            list_variable_renaming[[varname]]
                            )
+  }
+
+  # Renaming columns in data.frame
+  for (colname in names( list_columns_renaming )){
+    colnames(table) <- replace(colnames(table),
+                           colnames(table)==colname,
+                           list_columns_renaming[[colname]]
+    )
   }
 
   # Adding dataframe to sheet
