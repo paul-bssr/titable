@@ -154,10 +154,24 @@ xlsx.addTitle <- function(sheet, rowIndex, title, titleStyle){
 
 
 set_custom_style <- function(wb, list_args){
-  custom_style <- CellStyle(wb) +
-    do.call( Font, append( list(wb), list_args$list_font ) ) +
-    do.call( Alignment, append( list(wb), list_args$list_alignment ) ) +
-    #do.call( Border, list(list(wb), list_args$list_border) )
+  custom_style <- CellStyle(wb)
+
+  if ("list_font" %in% names( list_args ) & (length(list_args$list_font)) ){
+    custom_style <- custom_style +
+      do.call( Font, append( list(wb), list_args$list_font ) )
+  }
+
+  if ("list_alignment" %in% names( list_args ) &
+      ( length(list_args$list_alignment) ) ){
+    custom_style <- custom_style +
+      do.call( Alignment, list_args$list_alignment )
+  }
+
+  if ("list_border" %in% names( list_args ) & (length(list_args$list_border)) ){
+    custom_style <- custom_style +
+      do.call( Border, list_args$list_border )
+  }
+
   return(custom_style)
 }
 
@@ -167,8 +181,6 @@ list_title <- list(
     color = "blue",
     isBold = TRUE,
     underline = 1)#,
-  #list_alignment = list(wrapText=TRUE, vertical="VERTICAL_CENTER", h="ALIGN_CENTER"),
-  #list_border = list("black")
   )
 
 list_subtitle = list(
