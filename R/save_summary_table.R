@@ -79,7 +79,9 @@ save_summary_table <- function(table,
   # Adding dataframe to sheet
   addDataFrame(table, sheet, startRow=3, startColumn=1, row.names = FALSE,
                colnamesStyle = cell_styles[[4]],
-               rownamesStyle = cell_styles[[3]])
+               rownamesStyle = cell_styles[[3]],
+               colStyle=list(`1`=cell_styles[[3]])
+               )
 
 
   ### Some formatting
