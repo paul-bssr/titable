@@ -12,7 +12,8 @@ extract_OR_to_table(
   model,
   OR_colname,
   digits = 3,
-  digits_p = 1
+  digits_p = 1,
+  p_limit
 )
 }
 \arguments{
@@ -31,6 +32,9 @@ and IC}
 
 \item{digits_p}{An integer input giving the number of significant digits for
 p_value (use of signif function)}
+
+\item{p_limit}{A float giving the limit value below which pvalue is printed
+as "<p_limit"}
 }
 \value{
 table data.frame completed

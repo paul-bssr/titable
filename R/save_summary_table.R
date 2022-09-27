@@ -23,7 +23,10 @@
 #' @param underline_p A boolean, indicating whether to add a font or not, to
 #' significant pvalues (default: True)
 #'
-#' @return
+#' @return Nothing. But an excel file is saved at the given location.
+#' @import xlsx
+#' @importFrom stringr str_extract
+#'
 #' @export
 #'
 #' @examples
@@ -67,7 +70,7 @@ save_summary_table <- function(table,
   if ( append ){
     wb <- loadWorkbook(file)
   }else{
-    wb<-createWorkbook(type="xlsx")
+    wb <- createWorkbook(type="xlsx")
   }
 
 
@@ -91,7 +94,7 @@ save_summary_table <- function(table,
   for (varname in names( list_variables_renaming )){
     table$label <- replace(table$label,
                            table$label==varname,
-                           list_variable_renaming[[varname]]
+                           list_variables_renaming[[varname]]
                            )
   }
 
