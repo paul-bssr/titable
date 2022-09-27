@@ -14,6 +14,8 @@ Imports:
     dplyr,
     finalfit,
     lars,
+    rJava,
+    stringr,
     testthat,
     xlsx
 Config/testthat/edition: 3

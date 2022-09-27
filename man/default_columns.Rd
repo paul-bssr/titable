@@ -48,6 +48,7 @@ It can use an already existing excel file and add a sheet. Or, it can create
 a new file.
 }
 \examples{
+\dontrun{
 # Creating table to save
 table <-summary_table(data = wdbc.data,
                       studied_vars = c("radius", "texture", "compactness_quartile"),
@@ -68,6 +69,7 @@ save_summary_table(table, filepath="data/", filename="test",
                    sheetname = "test_sheet_2",
                    title = "Regression logistic study",
                    subtitle = "This is an interesting study.", append=TRUE)
+}
 
 }
 \keyword{datasets}

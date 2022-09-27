@@ -1,3 +1,7 @@
+################################################################################
+# Utilities to save result data.frame in an excel
+#
+
 #' Function to save summary table in a nicely formatted excel file
 #'
 #' @description Function to save summary table in a nicely formatted excel file.
@@ -30,6 +34,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Creating table to save
 #' table <-summary_table(data = wdbc.data,
 #'                       studied_vars = c("radius", "texture", "compactness_quartile"),
@@ -50,6 +55,7 @@
 #'                    sheetname = "test_sheet_2",
 #'                    title = "Regression logistic study",
 #'                    subtitle = "This is an interesting study.", append=TRUE)
+#' }
 #'
 
 default_columns <- list("label"="Variables", "levels"="")
@@ -138,17 +144,21 @@ save_summary_table <- function(table,
 }
 
 
-### Some helper functions
-
+################################################################################
+#
+#
+#' Function to add a title to excel file
+#'
+#' @description This functions is an helper to build an excel output. It enables
+#' to add a title, or a subtitle, to a sheet object from a workbook (using xlsx
+#' library)
+#'
+#' @param sheet A sheet object in which title will be written
+#' @param rowIndex A numeric value indicating the row to contain the title
+#' @param title A character to be used as title
+#' @param titleStyle A cell style object to use for the title
+#'
 xlsx.addTitle <- function(sheet, rowIndex, title, titleStyle){
-  #++++++++++++++++++++++++
-  # Helper function to add titles
-  #++++++++++++++++++++++++
-  # - sheet : sheet object to contain the title
-  # - rowIndex : numeric value indicating the row to
-  #contain the title
-  # - title : the text to use as title
-  # - titleStyle : style object to use for title
   rows <-createRow(sheet,rowIndex=rowIndex)
   sheetTitle <-createCell(rows, colIndex=1)
   setCellValue(sheetTitle[[1,1]], title)
@@ -156,6 +166,21 @@ xlsx.addTitle <- function(sheet, rowIndex, title, titleStyle){
 }
 
 
+################################################################################
+#
+#
+#' Creating a cell style
+#'
+#' @description A function to define an xlsx cell style, depending on a list of
+#' arguments `list_args`
+#'
+#' @param wb A workbook object
+#' @param list_args A list containing differents lists of arguments : list_font,
+#' list_alignment, and list_border. Those sublists contain respectively
+#' arguments for Font, Alignment, and Border functions of CellStyle.
+#'
+#' @return A CellStyle defined thanks to `list_args`
+#'
 set_custom_style <- function(wb, list_args){
   custom_style <- CellStyle(wb)
 
@@ -178,14 +203,20 @@ set_custom_style <- function(wb, list_args){
   return(custom_style)
 }
 
+################################################################################
+#
+## Lists used to define different CellStyle (title, subtitle, columns...)
+
+# List for title CellStyle
 list_title <- list(
   list_font = list(
     heightInPoints = 16,
     color = "blue",
     isBold = TRUE,
-    underline = 1)#,
+    underline = 1)
   )
 
+# List for subtitle CellStyle
 list_subtitle = list(
   list_font = list(
     heightInPoints=14,
@@ -193,6 +224,7 @@ list_subtitle = list(
     isBold=FALSE)
 )
 
+# List for rownames CellStyle
 list_rownames <- list(
   list_font  = list(
     isBold = TRUE
@@ -203,7 +235,7 @@ list_rownames <- list(
   )
 )
 
-# Style for the data table column names
+# Style for column names
 list_colnames <- list(
   list_font  = list(
     isBold = TRUE
@@ -237,12 +269,31 @@ list_descriptive <- list(
   )
 )
 
-
+################################################################################
+#
+#' Extracting pvalue from string
+#'
+#' @param char_variable
+#'
+#' @return A numeric value corresponding to pvalue
 extract_pvalue_from_char <- function(char_variable){
   pvalue <-as.numeric(str_extract(char_variable, "(?<=p=).*(?=\\))"))
   return (pvalue)
 }
 
+
+################################################################################
+#
+#' Add background for significant values
+#'
+#' @description This function enables to add lavender background for cells
+#' corresponding to a significant p value
+#'
+#' @param wb A Workbook object from xlsx library
+#' @param sheet A sheet object from Workbook
+#' @param table A data.frame containing the data to be saved, i.e. summary_table
+#' object
+#'
 add_font_for_significant <- function(wb, sheet, table){
   # Extracting pvalues
   pvalue_table <- data.frame(
