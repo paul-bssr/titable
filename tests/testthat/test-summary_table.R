@@ -181,7 +181,7 @@ test_that("Checking OR univariate computation for qualitative variables", {
   )
 
   expect_equal(
-    table[ table$levels==level_sel, "OR (univariate)"],
+    table[ table$levels==paste(level_sel, ", N(%)", sep=""), "OR (univariate)"],
     OR_cq_str
   )
 
@@ -306,12 +306,12 @@ test_that("Checking OR miultiivariate computation for qualitative variables", {
 
 
   expect_equal(
-    table[ table$levels==level_sel, "OR (model 1)"],
+    table[ table$levels==paste(level_sel, ", N(%)", sep=""), "OR (model 1)"],
     OR_cq_str
   )
 
   expect_equal(
-    table[ table$levels==level_sel, "OR (model 2)"],
+    table[ table$levels==paste(level_sel, ", N(%)", sep=""), "OR (model 2)"],
     OR_cq_str_2
   )
 
