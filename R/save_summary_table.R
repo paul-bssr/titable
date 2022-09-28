@@ -277,7 +277,7 @@ list_descriptive <- list(
 #'
 #' @return A numeric value corresponding to pvalue
 extract_pvalue_from_char <- function(char_variable){
-  pvalue <-as.numeric(str_extract(char_variable, "(?<=p=).*(?=\\))"))
+  pvalue <-as.numeric(str_extract(char_variable, "(?<=p[=<]).*(?=\\))"))
   return (pvalue)
 }
 
@@ -315,7 +315,8 @@ add_font_for_significant <- function(wb, sheet, table){
                           sep=".")
   for ( cellname in list_cellnames ){
     cs <- c( CellStyle(wb) +
-               Alignment(h="ALIGN_LEFT", vertical="VERTICAL_CENTER") +
+               Alignment(horizontal = "ALIGN_RIGHT",
+                         vertical="VERTICAL_CENTER") +
                Fill(backgroundColor="lavender") )
     setCellStyle(cells[[cellname]], cs)
     }
