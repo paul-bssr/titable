@@ -9,7 +9,10 @@ summary_table(
   studied_vars,
   dependent,
   univariate = TRUE,
-  multivariate = NULL
+  multivariate = NULL,
+  digits = 3,
+  digits_p = 1,
+  p_limit = NULL
 )
 }
 \arguments{
@@ -26,6 +29,15 @@ table}
 
 \item{multivariate}{List of character vectors containing different sets to be
 used for adjustement.}
+
+\item{digits}{An integer input giving the number of digits for rounding OR
+and IC}
+
+\item{digits_p}{An integer input giving the number of significant digits for
+p_value (use of signif function)}
+
+\item{p_limit}{A float giving the limit value below which pvalue is printed
+as "<p_limit"}
 }
 \value{
 A data.frame containing :
@@ -60,6 +72,9 @@ summary_table(data = wdbc.data,
               studied_vars = c("radius", "texture", "compactness_quartile"),
               dependent = "diagnosis",
               multivariate = list(c("smoothness", "texture"),
-                                  c("concavity", "symmetry"))
+                                  c("concavity", "symmetry")),
+              digits = 2,
+              digits_p = 2,
+              p_limit=0.001
              )
 }

@@ -2,7 +2,7 @@
 
 export(extract_OR_from_model)
 export(extract_OR_to_str)
+export(save_summary_table)
 export(str_transform_OR_with_IC)
 export(summary_table)
-import(finalfit)
-import(stats)
+import(xlsx)

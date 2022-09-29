@@ -17,6 +17,12 @@
 #' table
 #' @param multivariate List of character vectors containing different sets to be
 #' used for adjustement.
+#' @param digits An integer input giving the number of digits for rounding OR
+#' and IC
+#' @param digits_p An integer input giving the number of significant digits for
+#' p_value (use of signif function)
+#' @param p_limit A float giving the limit value below which pvalue is printed
+#' as "<p_limit"
 #'
 #' @return A data.frame containing :
 #' \itemize{
@@ -26,7 +32,6 @@
 #' \item{ Columns for each univariate or multivariate model }
 #' }
 #'
-#' @import finalfit
 #' @export
 #'
 #' @examples
@@ -44,16 +49,31 @@
 #'               studied_vars = c("radius", "texture", "compactness_quartile"),
 #'               dependent = "diagnosis",
 #'               multivariate = list(c("smoothness", "texture"),
-#'                                   c("concavity", "symmetry"))
+#'                                   c("concavity", "symmetry")),
+#'               digits = 2,
+#'               digits_p = 2,
+#'               p_limit=0.001
 #'              )
 
 summary_table <- function(data,
                           studied_vars,
                           dependent,
                           univariate=TRUE,
-                          multivariate=NULL) {
+                          multivariate=NULL,
+                          digits = 3,
+                          digits_p = 1,
+                          p_limit = NULL
+                          ) {
+  # Checks
+  for (col in studied_vars){
+    if ( !(col %in% colnames(data)) ) {
+      str_check_col = paste("Column", col, "of studied_vars not in data columns")
+      stop(str_check_col)
+    }
+  }
+
   # Creation table skeleton
-  table <- summary_factorlist(data, dependent, studied_vars)
+  table <- finalfit::summary_factorlist(data, dependent, studied_vars)
 
 
   counter = 0
@@ -63,17 +83,21 @@ summary_table <- function(data,
     if (univariate){
       # Computing univariate model
       print ('Computing univariate')
-      frm <- as.formula(paste(dependent, "~", col))
-      model_univariate <- glm( formula = frm,
-                               data=data,
-                               family="binomial")
+      frm <- stats::as.formula(paste(dependent, "~", col))
+      model_univariate <- stats::glm( formula = frm,
+                                      data=data,
+                                      family="binomial")
 
       # Assigning the result in output table
       table <- extract_OR_to_table( data = data,
                                     table = table,
                                     studied_var = col,
                                     model = model_univariate,
-                                    OR_colname ="OR (univariate)")
+                                    OR_colname ="OR (univariate)",
+                                    digits = digits,
+                                    digits_p = digits_p,
+                                    p_limit = p_limit
+                                    )
 
     }
 
@@ -87,10 +111,10 @@ summary_table <- function(data,
         print ( paste('Computing multivariate model on', str_adj) )
 
         # Computing multivariate model
-        frm <- as.formula(paste(dependent, "~", col, "+", str_adj))
-        model_multivariate <- glm( formula = frm,
-                                   data=data,
-                                   family="binomial")
+        frm <- stats::as.formula(paste(dependent, "~", col, "+", str_adj))
+        model_multivariate <- stats::glm( formula = frm,
+                                          data=data,
+                                          family="binomial")
 
 
         # Assigning the result in output table
@@ -99,7 +123,10 @@ summary_table <- function(data,
                                       table = table,
                                       studied_var = col,
                                       model = model_multivariate,
-                                      OR_colname = OR_multi_colname )
+                                      OR_colname = OR_multi_colname,
+                                      digits = digits,
+                                      digits_p = digits_p,
+                                      p_limit = p_limit)
 
         counter = counter + 1
       }
@@ -107,6 +134,11 @@ summary_table <- function(data,
 
     cat(paste(col, "finished\n\n"))
   }
+
+  table[is.na(table)] <- "-"
+  table[ table$levels != "Mean (SD)", "levels"] <- paste(
+    table[ table$levels != "Mean (SD)", "levels"], ", N(%)", sep=""
+    )
 
   return(table)
 

@@ -4,7 +4,15 @@
 \alias{str_transform_OR_with_IC}
 \title{Title}
 \usage{
-str_transform_OR_with_IC(OR, IC_min, IC_max, pvalue, digits = 3, digits_p = 3)
+str_transform_OR_with_IC(
+  OR,
+  IC_min,
+  IC_max,
+  pvalue,
+  digits = 3,
+  digits_p = 3,
+  p_limit = NULL
+)
 }
 \arguments{
 \item{OR}{A numeric input corresponding to an Odd Ratio}
@@ -20,8 +28,11 @@ interval associated to OR}
 \item{digits}{An integer input giving the number of digits for rounding OR
 and IC}
 
-\item{digits_p}{An integer input giving the number of digits for rounding
-p_value}
+\item{digits_p}{An integer input giving the number of significant digits for
+p_value (use of signif function)}
+
+\item{p_limit}{A float giving the limit value below which pvalue is printed
+as "<p_limit"}
 }
 \value{
 a string "OR (IC_min-IC_max, p=pvalue)"
@@ -32,7 +43,9 @@ in a string of the form "OR (IC_min-ICmax, p=pvalue)"
 }
 \examples{
 str_transform_OR_with_IC(OR=2.02, IC_min=1.803, IC_max=2.405, pvalue=0.0025)
-str_transform_OR_with_IC(OR=2.02, IC_min=1.803, IC_max=2.405, pvalue=0.0025,
-digits=1, digits_p=4)
+str_transform_OR_with_IC(OR=2.02, IC_min=1.807, IC_max=2.403, pvalue=0.02564,
+digits=2, digits_p=3)
+str_transform_OR_with_IC(OR=2.02, IC_min=1.803, IC_max=2.405, pvalue=0.0003,
+p_limit=0.001)
 
 }

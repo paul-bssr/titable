@@ -4,7 +4,14 @@
 \alias{extract_OR_to_str}
 \title{Compute and summarize in a string OR, IC, pvalue for a glm model}
 \usage{
-extract_OR_to_str(model, studied_var, level = NULL)
+extract_OR_to_str(
+  model,
+  studied_var,
+  level = NULL,
+  digits = 3,
+  digits_p = 1,
+  p_limit = NULL
+)
 }
 \arguments{
 \item{model}{A glm model corresponding to a logistic regression
@@ -14,6 +21,15 @@ extract_OR_to_str(model, studied_var, level = NULL)
 
 \item{level}{A string indicating the level to consider for categorical
 variables (default:NULL)}
+
+\item{digits}{An integer input giving the number of digits for rounding OR
+and IC}
+
+\item{digits_p}{An integer input giving the number of significant digits for
+p_value (use of signif function)}
+
+\item{p_limit}{A float giving the limit value below which pvalue is printed
+as "<p_limit"}
 }
 \value{
 A string of the form "OR (IC_min-IC_max, p=pvalue)
@@ -31,8 +47,8 @@ model_1 <- glm( diagnosis ~ texture + radius + compactness_quartile,
                 family="binomial")
 
 # For quantitative variable
-extract_OR_to_str(model_1, studied_var = "texture")
+extract_OR_to_str(model_1, studied_var = "texture", p_limit=0.01)
 
 # For categorical variable
-extract_OR_to_str(model_1, studied_var = "compactness_quartile", level="2")
+extract_OR_to_str(model_1, studied_var = "compactness_quartile", level="2",)
 }
