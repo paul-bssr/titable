@@ -16,6 +16,9 @@
     <loc>/LICENSE.html</loc>
   </url>
   <url>
+    <loc>/reference/add_font_for_significant.html</loc>
+  </url>
+  <url>
     <loc>/reference/extract_OR_from_model.html</loc>
   </url>
   <url>
@@ -25,7 +28,16 @@
     <loc>/reference/extract_OR_to_table.html</loc>
   </url>
   <url>
+    <loc>/reference/extract_pvalue_from_char.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/save_summary_table.html</loc>
+  </url>
+  <url>
+    <loc>/reference/set_custom_style.html</loc>
   </url>
   <url>
     <loc>/reference/str_transform_OR_with_IC.html</loc>
@@ -35,5 +47,8 @@
   </url>
   <url>
     <loc>/reference/wdbc.data.html</loc>
+  </url>
+  <url>
+    <loc>/reference/xlsx.addTitle.html</loc>
   </url>
 </urlset>
