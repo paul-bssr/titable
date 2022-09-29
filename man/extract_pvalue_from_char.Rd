@@ -7,7 +7,7 @@
 extract_pvalue_from_char(char_variable)
 }
 \arguments{
-\item{char_variable}{}
+\item{char_variable}{A character from which to extract p value}
 }
 \value{
 A numeric value corresponding to pvalue

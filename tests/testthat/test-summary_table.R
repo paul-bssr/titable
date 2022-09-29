@@ -1,12 +1,12 @@
-test_that("Exceptions work", {
-  expect_error(
+testthat::test_that("Exceptions work", {
+  testthat::expect_error(
     summary_table(data = wdbc.data,
                   studied_vars = c("rardius", "texture")),
     "Column rardius of studied_vars not in data columns"
   )
 })
 
-test_that("Factor descriptive table works for quantitative variables", {
+testthat::test_that("Factor descriptive table works for quantitative variables", {
 
   table <- summary_table(data = wdbc.data,
                          studied_vars = c("radius", "texture",
@@ -26,12 +26,12 @@ test_that("Factor descriptive table works for quantitative variables", {
                                sep=""
                                )
 
-  expect_equal(
+  testthat::expect_equal(
     table[ table$label=="radius", "B"],
     radius_summary[ radius_summary$diagnosis=="B",][["str"]]
   )
 
-  expect_equal(
+  testthat::expect_equal(
     table[ table$label=="radius", "M"],
     radius_summary[ radius_summary$diagnosis=="M",][["str"]]
   )
@@ -40,7 +40,7 @@ test_that("Factor descriptive table works for quantitative variables", {
 
 
 
-test_that("Factor descriptive table works for categorical variables", {
+testthat::test_that("Factor descriptive table works for categorical variables", {
 
   table <- summary_table(data = wdbc.data,
                          studied_vars = c("radius", "texture",
@@ -64,12 +64,12 @@ test_that("Factor descriptive table works for categorical variables", {
   index_start_row <- which(table$label=="compactness_quartile")
   index_end_row <- nlevels(wdbc.data$compactness_quartile) + index_start_row -1
 
-  expect_equal(
+  testthat::expect_equal(
     table[ index_start_row:index_end_row, "B"],
     compactness_q_B_str
   )
 
-  expect_equal(
+  testthat::expect_equal(
     table[ index_start_row:index_end_row, "M"],
     compactness_q_M_str
   )
@@ -79,7 +79,7 @@ test_that("Factor descriptive table works for categorical variables", {
 
 
 
-test_that("Checking OR univariate computation for quantitative variables", {
+testthat::test_that("Checking OR univariate computation for quantitative variables", {
 
   table <- summary_table(data = wdbc.data,
                          studied_vars = c("radius", "texture",
@@ -105,7 +105,7 @@ test_that("Checking OR univariate computation for quantitative variables", {
                           sep=""
   )
 
-  expect_equal(
+  testthat::expect_equal(
     table[ table$label=="radius", "OR (univariate)"],
     OR_radius_str
   )
@@ -114,7 +114,7 @@ test_that("Checking OR univariate computation for quantitative variables", {
 
 
 
-test_that("Rounding process os working", {
+testthat::test_that("Rounding process os working", {
 
   table <- summary_table(data = wdbc.data,
                          studied_vars = c("radius", "texture",
@@ -142,7 +142,7 @@ test_that("Rounding process os working", {
                           sep=""
   )
 
-  expect_equal(
+  testthat::expect_equal(
     table[ table$label=="radius", "OR (univariate)"],
     OR_radius_str
   )
@@ -151,7 +151,7 @@ test_that("Rounding process os working", {
 
 
 
-test_that("Checking OR univariate computation for qualitative variables", {
+testthat::test_that("Checking OR univariate computation for qualitative variables", {
 
   table <- summary_table(data = wdbc.data,
                          studied_vars = c("radius", "texture",
@@ -180,7 +180,7 @@ test_that("Checking OR univariate computation for qualitative variables", {
                       sep=""
   )
 
-  expect_equal(
+  testthat::expect_equal(
     table[ table$levels==paste(level_sel, ", N(%)", sep=""), "OR (univariate)"],
     OR_cq_str
   )
@@ -189,7 +189,7 @@ test_that("Checking OR univariate computation for qualitative variables", {
 
 
 
-test_that("Checking OR multivariate computation for quantitative variables", {
+testthat::test_that("Checking OR multivariate computation for quantitative variables", {
 
   table <- summary_table(data = wdbc.data,
                          studied_vars = c("radius", "texture",
@@ -236,12 +236,12 @@ test_that("Checking OR multivariate computation for quantitative variables", {
                            sep=""
   )
 
-  expect_equal(
+  testthat::expect_equal(
     table[ table$label=="radius", "OR (model 1)"],
     OR_radius_str
   )
 
-  expect_equal(
+  testthat::expect_equal(
     table[ table$label=="radius", "OR (model 2)"],
     OR_radius_str_2
   )
@@ -250,7 +250,7 @@ test_that("Checking OR multivariate computation for quantitative variables", {
 
 
 
-test_that("Checking OR miultiivariate computation for qualitative variables", {
+testthat::test_that("Checking OR miultiivariate computation for qualitative variables", {
 
   table <- summary_table(data = wdbc.data,
                          studied_vars = c("radius", "texture",
@@ -305,12 +305,12 @@ test_that("Checking OR miultiivariate computation for qualitative variables", {
   )
 
 
-  expect_equal(
+  testthat::expect_equal(
     table[ table$levels==paste(level_sel, ", N(%)", sep=""), "OR (model 1)"],
     OR_cq_str
   )
 
-  expect_equal(
+  testthat::expect_equal(
     table[ table$levels==paste(level_sel, ", N(%)", sep=""), "OR (model 2)"],
     OR_cq_str_2
   )

@@ -32,7 +32,6 @@
 #' \item{ Columns for each univariate or multivariate model }
 #' }
 #'
-#' @import finalfit
 #' @export
 #'
 #' @examples
@@ -74,7 +73,7 @@ summary_table <- function(data,
   }
 
   # Creation table skeleton
-  table <- summary_factorlist(data, dependent, studied_vars)
+  table <- finalfit::summary_factorlist(data, dependent, studied_vars)
 
 
   counter = 0
@@ -84,10 +83,10 @@ summary_table <- function(data,
     if (univariate){
       # Computing univariate model
       print ('Computing univariate')
-      frm <- as.formula(paste(dependent, "~", col))
-      model_univariate <- glm( formula = frm,
-                               data=data,
-                               family="binomial")
+      frm <- stats::as.formula(paste(dependent, "~", col))
+      model_univariate <- stats::glm( formula = frm,
+                                      data=data,
+                                      family="binomial")
 
       # Assigning the result in output table
       table <- extract_OR_to_table( data = data,
@@ -112,10 +111,10 @@ summary_table <- function(data,
         print ( paste('Computing multivariate model on', str_adj) )
 
         # Computing multivariate model
-        frm <- as.formula(paste(dependent, "~", col, "+", str_adj))
-        model_multivariate <- glm( formula = frm,
-                                   data=data,
-                                   family="binomial")
+        frm <- stats::as.formula(paste(dependent, "~", col, "+", str_adj))
+        model_multivariate <- stats::glm( formula = frm,
+                                          data=data,
+                                          family="binomial")
 
 
         # Assigning the result in output table

@@ -8,7 +8,7 @@
 #' It can use an already existing excel file and add a sheet. Or, it can create
 #' a new file.
 #'
-#' @param summary_table A data.frame containing the data to save in excel file
+#' @param table A data.frame containing the data to save in excel file
 #' @param filepath A character containing a path to the folder for saving
 #' @param filename A character containing the name to give to the file
 #' (without the extension)
@@ -29,7 +29,6 @@
 #'
 #' @return Nothing. But an excel file is saved at the given location.
 #' @import xlsx
-#' @importFrom stringr str_extract
 #'
 #' @export
 #'
@@ -57,9 +56,6 @@
 #'                    subtitle = "This is an interesting study.", append=TRUE)
 #' }
 #'
-
-default_columns <- list("label"="Variables", "levels"="")
-
 save_summary_table <- function(table,
                                filepath,
                                filename,
@@ -68,7 +64,8 @@ save_summary_table <- function(table,
                                subtitle = "",
                                append = FALSE,
                                list_variables_renaming = list(),
-                               list_columns_renaming = default_columns,
+                               list_columns_renaming = list("label"="Variables",
+                                                            "levels"=""),
                                underline_p = TRUE
                                ){
   # create a new workbook for outputs
@@ -277,7 +274,9 @@ list_descriptive <- list(
 #'
 #' @return A numeric value corresponding to pvalue
 extract_pvalue_from_char <- function(char_variable){
-  pvalue <-as.numeric(str_extract(char_variable, "(?<=p[=<]).*(?=\\))"))
+  pvalue <-as.numeric(
+    stringr::str_extract(char_variable, "(?<=p[=<]).*(?=\\))")
+    )
   return (pvalue)
 }
 
