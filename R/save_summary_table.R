@@ -43,7 +43,7 @@
 #'                                           c("concavity", "symmetry"))
 #'                                           )
 #' # Creating an excel file
-#' save_summary_table(table, filepath="data/", filename="test",
+#' save_summary_table(table, filepath="inst/extdata/", filename="test",
 #'                    sheetname = "test_sheet_1",
 #'                    title = "Regression logistic study",
 #'                    subtitle = "This is an interesting study.",
@@ -273,7 +273,7 @@ list_descriptive <- list(
 #
 #' Extracting pvalue from string
 #'
-#' @param char_variable
+#' @param char_variable A character from which to extract p value
 #'
 #' @return A numeric value corresponding to pvalue
 extract_pvalue_from_char <- function(char_variable){
