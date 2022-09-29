@@ -20,3 +20,4 @@ A CellStyle defined thanks to \code{list_args}
 A function to define an xlsx cell style, depending on a list of
 arguments \code{list_args}
 }
+\keyword{internal}

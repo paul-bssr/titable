@@ -15,3 +15,4 @@ A numeric value corresponding to pvalue
 \description{
 Extracting pvalue from string
 }
+\keyword{internal}

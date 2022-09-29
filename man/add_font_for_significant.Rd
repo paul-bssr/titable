@@ -18,3 +18,4 @@ object}
 This function enables to add lavender background for cells
 corresponding to a significant p value
 }
+\keyword{internal}

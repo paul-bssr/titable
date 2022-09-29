@@ -155,6 +155,8 @@ save_summary_table <- function(table,
 #' @param title A character to be used as title
 #' @param titleStyle A cell style object to use for the title
 #'
+#' @keywords internal
+#'
 xlsx.addTitle <- function(sheet, rowIndex, title, titleStyle){
   rows <-createRow(sheet,rowIndex=rowIndex)
   sheetTitle <-createCell(rows, colIndex=1)
@@ -177,6 +179,8 @@ xlsx.addTitle <- function(sheet, rowIndex, title, titleStyle){
 #' arguments for Font, Alignment, and Border functions of CellStyle.
 #'
 #' @return A CellStyle defined thanks to `list_args`
+#'
+#' @keywords internal
 #'
 set_custom_style <- function(wb, list_args){
   custom_style <- CellStyle(wb)
@@ -273,6 +277,9 @@ list_descriptive <- list(
 #' @param char_variable A character from which to extract p value
 #'
 #' @return A numeric value corresponding to pvalue
+#'
+#' @keywords internal
+#'
 extract_pvalue_from_char <- function(char_variable){
   pvalue <-as.numeric(
     stringr::str_extract(char_variable, "(?<=p[=<]).*(?=\\))")
@@ -292,6 +299,8 @@ extract_pvalue_from_char <- function(char_variable){
 #' @param sheet A sheet object from Workbook
 #' @param table A data.frame containing the data to be saved, i.e. summary_table
 #' object
+#'
+#' @keywords internal
 #'
 add_font_for_significant <- function(wb, sheet, table){
   # Extracting pvalues

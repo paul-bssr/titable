@@ -20,3 +20,4 @@ This functions is an helper to build an excel output. It enables
 to add a title, or a subtitle, to a sheet object from a workbook (using xlsx
 library)
 }
+\keyword{internal}
