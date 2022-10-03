@@ -134,7 +134,9 @@ save_summary_table <- function(table,
   setRowHeight(rows, multiplier = 2)
 
   # Change font for significant values
-  add_font_for_significant(wb, sheet, table)
+  if (underline_p){
+    add_font_for_significant(wb, sheet, table)
+  }
 
   # Workbook saving
   saveWorkbook(wb, file)
