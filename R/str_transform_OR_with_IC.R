@@ -39,10 +39,10 @@ str_transform_OR_with_IC <- function(OR, IC_min,
   stopifnot("Input IC_min must be numeric" = is.numeric(IC_min))
   stopifnot("Input IC_max must be numeric" = is.numeric(IC_max))
   stopifnot("Input pvalue must be numeric" = is.numeric(pvalue))
-  stopifnot("Input OR must be a positive number" = (OR>0))
-  stopifnot("Input IC_min must be a positive number" = (IC_min>0))
-  stopifnot("Input IC_max must be a positive number" = (IC_max>0))
-  stopifnot("Input pvalue must be a positive number" = (pvalue>0))
+  stopifnot("Input OR must be a positive number" = (OR>=0))
+  stopifnot("Input IC_min must be a positive number" = (IC_min>=0))
+  stopifnot("Input IC_max must be a positive number" = (IC_max>=0))
+  stopifnot("Input pvalue must be a positive number" = (pvalue>=0))
 
   # Printing pvalue depending on p_limit
   pvalue_char <- paste(
