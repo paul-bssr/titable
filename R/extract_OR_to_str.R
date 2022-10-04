@@ -51,7 +51,6 @@ extract_OR_to_str <- function(model,
   coef <- extract_OR_from_model(model, studied_var, level)
 
   # Converting to a string
-  print(coef)
   str_final <- str_transform_OR_with_IC(
     OR = coef[1],
     IC_min = coef[2],
