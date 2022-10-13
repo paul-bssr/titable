@@ -1,3 +1,5 @@
+# titable 0.1.2
+
 # titable 0.1.1
 
 * Bug fix in `str_transform_OR_with_IC()` 0 values are no longer excluded

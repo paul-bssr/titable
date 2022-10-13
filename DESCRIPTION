@@ -1,6 +1,6 @@
 Package: titable
 Title: Summarizes logistic regression analysis results in tables
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
     person("Paul", "Brasseur", , "paul_brasseur@hotmail.fr", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
