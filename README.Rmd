@@ -1,0 +1,77 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# titable
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The `titable` package provides function to efficiently conduct logistic 
+regression analyses, and summarize them into compact tables. These tables can be
+saved in an excel sheet with a nice formatting. 
+
+The raw results of logistic regression are also directly accessible in the form
+of a data.frame. Thus, enabling, to achieve some usal plots as, for instance, 
+forest plots.
+
+
+## Installation
+
+You can install the development version of titable from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("paul-bssr/titable", INSTALL_opts=c("--no-multiarch"))
+```
+
+Sometimes JAVA version can cause an issue, generating th efollowing error message :
+```
+Error : .onLoad failed in loadNamespace() for 'rJava', details:
+   call: fun(libname, pkgname)
+   error: JAVA_HOME cannot be determined from the Registry
+ Error: package or namespace load failed for ‘rJava’
+```
+In that case, installing 64 bit Java ([here](https://java.com/en/download/manual.jsp)) 
+should solve the issue.
+
+## Example
+
+This is a typical use case for the library:
+
+```{r example}
+library(titable)
+## Generating a summary table
+table <- summary_table(data = wdbc.data,
+                       studied_vars = c("radius", "texture", "compactness_quartile"),
+                       dependent = "diagnosis",
+                       multivariate = list(c("smoothness", "texture"),
+                                           c("concavity", "symmetry")),
+                       digits = 2,
+                       digits_p = 2,
+                       p_limit=0.001,
+                       verbose=FALSE
+                       )
+table
+
+## Saving the result in an excel file
+# # Creating an excel file
+# save_summary_table(table, filepath="inst/extdata/", filename="test",
+#                    sheetname = "test_sheet_1",
+#                    title = "Regression logistic study",
+#                    subtitle = "This is an interesting study.",
+#                    list_variables_renaming = list("compactness_quartile"="Compactness quartile")
+#                    )
+
+```
