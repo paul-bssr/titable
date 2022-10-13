@@ -23,6 +23,8 @@
 #' p_value (use of signif function)
 #' @param p_limit A float giving the limit value below which pvalue is printed
 #' as "<p_limit"
+#' @param verbose A boolean indicating whether to print out or not advance in
+#' computation. Default : FALSE.
 #'
 #' @return A data.frame containing :
 #' \itemize{
@@ -62,7 +64,8 @@ summary_table <- function(data,
                           multivariate=NULL,
                           digits = 3,
                           digits_p = 1,
-                          p_limit = NULL
+                          p_limit = NULL,
+                          verbose = FALSE
                           ) {
   # Checks
   for (col in studied_vars){
@@ -78,11 +81,11 @@ summary_table <- function(data,
 
   counter = 0
   for ( col in studied_vars ){
-    print (col)
+    if (verbose){print (col)}
     ## Adding univariate model
     if (univariate){
       # Computing univariate model
-      print ('Computing univariate')
+      if (verbose){print ('Computing univariate')}
       frm <- stats::as.formula(paste(dependent, "~", col))
       model_univariate <- stats::glm( formula = frm,
                                       data=data,
@@ -108,7 +111,9 @@ summary_table <- function(data,
       for (adjustement_set in multivariate){
         str_adj <- paste( adjustement_set[adjustement_set != col],
                           collapse = " + ")
-        print ( paste('Computing multivariate model on', str_adj) )
+        if (verbose){
+          print ( paste('Computing multivariate model on', str_adj) )
+        }
 
         # Computing multivariate model
         frm <- stats::as.formula(paste(dependent, "~", col, "+", str_adj))
@@ -132,7 +137,7 @@ summary_table <- function(data,
       }
     }
 
-    cat(paste(col, "finished\n\n"))
+    if (verbose){cat(paste(col, "finished\n\n"))}
   }
 
   table[is.na(table)] <- "-"

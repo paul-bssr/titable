@@ -12,7 +12,8 @@ summary_table(
   multivariate = NULL,
   digits = 3,
   digits_p = 1,
-  p_limit = NULL
+  p_limit = NULL,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -38,6 +39,9 @@ p_value (use of signif function)}
 
 \item{p_limit}{A float giving the limit value below which pvalue is printed
 as "<p_limit"}
+
+\item{verbose}{A boolean indicating whether to print out or not advance in
+computation. Default : FALSE.}
 }
 \value{
 A data.frame containing :

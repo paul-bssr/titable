@@ -57,7 +57,7 @@ extract_OR_from_model <- function(model, studied_var, level=NULL){
   p = coef[index_var,"Pr(>|z|)"]
 
   # IC_min, IC_max extraction from confint
-  conf_int = stats::confint(model)
+  conf_int = suppressMessages(stats::confint(model))
   index_conf_int = which(rownames(conf_int)==coef_var)
   IC_min = exp( conf_int[index_conf_int, "2.5 %"] )
   IC_max = exp( conf_int[index_conf_int, "97.5 %"] )
