@@ -28,7 +28,6 @@
 #' significant pvalues (default: True)
 #'
 #' @return Nothing. But an excel file is saved at the given location.
-#' @import xlsx
 #'
 #' @export
 #'
@@ -71,14 +70,14 @@ save_summary_table <- function(table,
   # create a new workbook for outputs
   file = paste( filepath, filename, ".xlsx", sep="")
   if ( append ){
-    wb <- loadWorkbook(file)
+    wb <- xlsx::loadWorkbook(file)
   }else{
-    wb <- createWorkbook(type="xlsx")
+    wb <- xlsx::createWorkbook(type="xlsx")
   }
 
 
   # Creating a sheet
-  sheet <- createSheet(wb, sheetName = sheetname)
+  sheet <- xlsx::createSheet(wb, sheetName = sheetname)
 
   # Add title
   xlsx.addTitle(sheet, rowIndex=1, title=title,
@@ -116,7 +115,7 @@ save_summary_table <- function(table,
     name <- as.character(i)
     list_result_cells[[name]] <-  set_custom_style(wb, list_results)
   }
-  addDataFrame(table, sheet, startRow=4, startColumn=1, row.names = FALSE,
+  xlsx::addDataFrame(table, sheet, startRow=4, startColumn=1, row.names = FALSE,
                colnamesStyle = set_custom_style(wb, list_colnames),
                rownamesStyle = set_custom_style(wb, list_rownames),
                colStyle=list_result_cells
@@ -125,13 +124,13 @@ save_summary_table <- function(table,
 
   ### Some formatting
   # Change column width
-  setColumnWidth(sheet, colIndex=c(1), colWidth=20)
-  setColumnWidth(sheet, colIndex=c(2:4), colWidth=11)
-  setColumnWidth(sheet, colIndex=c(5:ncol(table)), colWidth=32)
+  xlsx::setColumnWidth(sheet, colIndex=c(1), colWidth=20)
+  xlsx::setColumnWidth(sheet, colIndex=c(2:4), colWidth=11)
+  xlsx::setColumnWidth(sheet, colIndex=c(5:ncol(table)), colWidth=32)
 
   # Change row height
-  rows  <- getRows(sheet )
-  setRowHeight(rows, multiplier = 2)
+  rows  <- xlsx::getRows(sheet )
+  xlsx::setRowHeight(rows, multiplier = 2)
 
   # Change font for significant values
   if (underline_p){
@@ -139,7 +138,7 @@ save_summary_table <- function(table,
   }
 
   # Workbook saving
-  saveWorkbook(wb, file)
+  xlsx::saveWorkbook(wb, file)
 }
 
 
@@ -160,10 +159,10 @@ save_summary_table <- function(table,
 #' @keywords internal
 #'
 xlsx.addTitle <- function(sheet, rowIndex, title, titleStyle){
-  rows <-createRow(sheet,rowIndex=rowIndex)
-  sheetTitle <-createCell(rows, colIndex=1)
-  setCellValue(sheetTitle[[1,1]], title)
-  setCellStyle(sheetTitle[[1,1]], titleStyle)
+  rows <-xlsx::createRow(sheet,rowIndex=rowIndex)
+  sheetTitle <-xlsx::createCell(rows, colIndex=1)
+  xlsx::setCellValue(sheetTitle[[1,1]], title)
+  xlsx::setCellStyle(sheetTitle[[1,1]], titleStyle)
 }
 
 
@@ -185,22 +184,22 @@ xlsx.addTitle <- function(sheet, rowIndex, title, titleStyle){
 #' @keywords internal
 #'
 set_custom_style <- function(wb, list_args){
-  custom_style <- CellStyle(wb)
+  custom_style <- xlsx::CellStyle(wb)
 
   if ("list_font" %in% names( list_args ) & (length(list_args$list_font)) ){
     custom_style <- custom_style +
-      do.call( Font, append( list(wb), list_args$list_font ) )
+      do.call( xlsx::Font, append( list(wb), list_args$list_font ) )
   }
 
   if ("list_alignment" %in% names( list_args ) &
       ( length(list_args$list_alignment) ) ){
     custom_style <- custom_style +
-      do.call( Alignment, list_args$list_alignment )
+      do.call( xlsx::Alignment, list_args$list_alignment )
   }
 
   if ("list_border" %in% names( list_args ) & (length(list_args$list_border)) ){
     custom_style <- custom_style +
-      do.call( Border, list_args$list_border )
+      do.call( xlsx::Border, list_args$list_border )
   }
 
   return(custom_style)
@@ -318,16 +317,16 @@ add_font_for_significant <- function(wb, sheet, table){
   index_significant_values$col <- index_significant_values$col+4
 
   # Filling corresponding cells
-  rows <- getRows(sheet, rowIndex = 5:(4+nrow(table)) )
-  cells <- getCells( rows )
+  rows <- xlsx::getRows(sheet, rowIndex = 5:(4+nrow(table)) )
+  cells <- xlsx::getCells( rows )
   list_cellnames <- paste(index_significant_values$row,
                           index_significant_values$col,
                           sep=".")
   for ( cellname in list_cellnames ){
-    cs <- c( CellStyle(wb) +
-               Alignment(horizontal = "ALIGN_RIGHT",
+    cs <- c( xlsx::CellStyle(wb) +
+               xlsx::Alignment(horizontal = "ALIGN_RIGHT",
                          vertical="VERTICAL_CENTER") +
-               Fill(backgroundColor="lavender") )
-    setCellStyle(cells[[cellname]], cs)
+               xlsx::Fill(backgroundColor="lavender") )
+    xlsx::setCellStyle(cells[[cellname]], cs)
     }
   }
